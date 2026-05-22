@@ -18,7 +18,7 @@ class EmailInput(BaseModel):
 async def process_pdf(payload: EmailInput):
     # 1. Nájdenie URL adresy v texte mailu pomocou regulárneho výrazu
     # Tento výraz vyhľadá čokoľvek, čo začína na http:// alebo https://
-    urls = re.findall(r"(https?://[^\s"']+)", payload.text)
+    urls = re.findall(r"""(https?://[^\s"']+\.pdf)""", payload.text, re.IGNORECASE)
 
     if not urls:
         raise HTTPException(
