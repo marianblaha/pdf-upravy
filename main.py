@@ -1,65 +1,57 @@
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import Response
-from pypdf import PdfReader, PdfWriter
-from reportlab.pdfgen import canvas
-import json
 import io
+import os
+import re
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+import requests
 
 app = FastAPI()
 
-@app.post("/edit-pdf")
-async def edit_pdf(
-    file: UploadFile = File(...),
-    edits: str = Form(...)
-):
-    """
-    Očakáva PDF súbor a JSON string (edits) vo formáte:
-    [{"page": 0, "x": 100, "y": 700, "text": "Chýbajúci údaj"}]
-    """
-    # 1. Načítanie inštrukcií a pôvodného PDF do pamäte
-    edit_data = json.loads(edits)
-    original_pdf_bytes = await file.read()
-    reader = PdfReader(io.BytesIO(original_pdf_bytes))
-    writer = PdfWriter()
 
-    # Zoskupenie úprav podľa strán (ak dopisujete na viaceré strany)
-    edits_by_page = {}
-    for edit in edit_data:
-        page_num = edit.get("page", 0) # Indexované od 0
-        if page_num not in edits_by_page:
-            edits_by_page[page_num] = []
-        edits_by_page[page_num].append(edit)
+# Definujeme, ako vyzerajú prichádzajúce dáta z n8n
+class EmailInput(BaseModel):
+    text: str
 
-    # 2. Iterácia cez strany PDF a aplikovanie zmien
-    for i, page in enumerate(reader.pages):
-        if i in edits_by_page:
-            # Vytvorenie prázdneho plátna (overlay) pre aktuálnu stranu
-            packet = io.BytesIO()
-            # Extrakcia reálnych rozmerov aktuálnej strany
-            box = page.mediabox
-            width, height = float(box.width), float(box.height)
-            
-            can = canvas.Canvas(packet, pagesize=(width, height))
-            
-            # Zápis všetkých textov pre túto stranu
-            for edit_item in edits_by_page[i]:
-                # Voliteľne: nastavenie fontu (can.setFont("Helvetica", 12))
-                can.drawString(edit_item["x"], edit_item["y"], edit_item["text"])
-            
-            can.save()
-            packet.seek(0)
-            
-            # Načítanie overlay vrstvy a jej zlúčenie s pôvodnou stranou
-            overlay_pdf = PdfReader(packet)
-            overlay_page = overlay_pdf.pages[0]
-            page.merge_page(overlay_page)
-        
-        # Pridanie (upravenej alebo neupravenej) strany do nového dokumentu
-        writer.add_page(page)
 
-    # 3. Zápis do výstupného streamu a odoslanie späť ako PDF
-    output_stream = io.BytesIO()
-    writer.write(output_stream)
-    output_stream.seek(0)
+@app.post("/process-pdf")
+async def process_pdf(payload: EmailInput):
+    # 1. Nájdenie URL adresy v texte mailu pomocou regulárneho výrazu
+    # Tento výraz vyhľadá čokoľvek, čo začína na http:// alebo https://
+    urls = re.findall(r"(https?://[^\s"']+)", payload.text)
 
-    return Response(content=output_stream.read(), media_type="application/pdf")
+    if not urls:
+        raise HTTPException(
+            status_code=400, detail="V texte e-mailu sa nenašiel žiadny odkaz."
+        )
+
+    # Vezmeme prvý nájdený odkaz
+    download_url = urls[0]
+
+    try:
+        # 2. Python sám stiahne PDF súbor z odkazu do pamäte
+        response = requests.get(download_url, timeout=30)
+        response.raise_for_status()  # Skontroluje, či stiahnutie prebehlo v poriadku
+        pdf_data = response.content
+    except Exception as e:
+        raise HTTPException(
+            status_code=400, detail=f"Nepodarilo sa stiahnuť PDF z odkazu: {str(e)}"
+        )
+
+    # 3. TU BUDE TVOJ KÓD NA ÚPRAVU PDF (pypdf, atď.)
+    # Pre test posielame stiahnutý súbor bez zmeny ďalej
+    modified_pdf = pdf_data
+
+    # 4. Odoslanie hotového upraveného PDF späť do n8n
+    return StreamingResponse(
+        io.BytesIO(modified_pdf),
+        media_type="application/pdf",
+        headers={"Content-Disposition": "attachment; filename=upravene_doc.pdf"},
+    )
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
