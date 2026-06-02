@@ -1,57 +1,64 @@
-import io
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.responses import Response
+import fitz
+import tempfile
 import os
-import re
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
-import requests
 
 app = FastAPI()
 
 
-# Definujeme, ako vyzerajú prichádzajúce dáta z n8n
-class EmailInput(BaseModel):
-    text: str
+@app.get("/")
+def root():
+    return {"status": "ok"}
 
 
-@app.post("/process-pdf")
-async def process_pdf(payload: EmailInput):
-    # 1. Nájdenie URL adresy v texte mailu pomocou regulárneho výrazu
-    # Tento výraz vyhľadá čokoľvek, čo začína na http:// alebo https://
-    urls = re.findall(r"""(https?://[^\s"']+\.pdf)""", payload.text, re.IGNORECASE)
+@app.post("/update-pdf")
+async def update_pdf(
+    file: UploadFile = File(...),
+    soh: str = Form(...)
+):
+    pdf_bytes = await file.read()
 
-    if not urls:
-        raise HTTPException(
-            status_code=400, detail="V texte e-mailu sa nenašiel žiadny odkaz."
-        )
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        tmp.write(pdf_bytes)
+        input_file = tmp.name
 
-    # Vezmeme prvý nájdený odkaz
-    download_url = urls[0]
+    output_file = input_file.replace(".pdf", "_out.pdf")
 
-    try:
-        # 2. Python sám stiahne PDF súbor z odkazu do pamäte
-        response = requests.get(download_url, timeout=30)
-        response.raise_for_status()  # Skontroluje, či stiahnutie prebehlo v poriadku
-        pdf_data = response.content
-    except Exception as e:
-        raise HTTPException(
-            status_code=400, detail=f"Nepodarilo sa stiahnuť PDF z odkazu: {str(e)}"
-        )
+    doc = fitz.open(input_file)
 
-    # 3. TU BUDE TVOJ KÓD NA ÚPRAVU PDF (pypdf, atď.)
-    # Pre test posielame stiahnutý súbor bez zmeny ďalej
-    modified_pdf = pdf_data
+    for page in doc:
 
-    # 4. Odoslanie hotového upraveného PDF späť do n8n
-    return StreamingResponse(
-        io.BytesIO(modified_pdf),
+        matches = page.search_for("SOH:0 %")
+
+        for rect in matches:
+
+            page.draw_rect(
+                rect,
+                color=(1, 1, 1),
+                fill=(1, 1, 1)
+            )
+
+            page.insert_text(
+                (rect.x0, rect.y1 - 2),
+                f"SOH:{soh} %",
+                fontsize=12
+            )
+
+    doc.save(output_file)
+    doc.close()
+
+    with open(output_file, "rb") as f:
+        result = f.read()
+
+    os.remove(input_file)
+    os.remove(output_file)
+
+    return Response(
+        content=result,
         media_type="application/pdf",
-        headers={"Content-Disposition": "attachment; filename=upravene_doc.pdf"},
+        headers={
+            "Content-Disposition":
+            "attachment; filename=updated.pdf"
+        }
     )
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
