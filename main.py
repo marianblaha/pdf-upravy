@@ -79,12 +79,12 @@ async def update_pdf(
                         page.insert_text(
                             (
                                 rect.x0,
-                                rect.y0 + font_size - 1
+                                rect.y0 + font_size - 4
                             ),
                             new_text,
                             fontsize=font_size,
                             fontname="helv",
-                            color=(0, 0, 0)
+                            color=(0.0, 0.65, 0.0)
                         )
 
     doc.save(
