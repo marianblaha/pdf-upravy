@@ -3,13 +3,19 @@ from fastapi.responses import Response
 import fitz
 import tempfile
 import os
+import re
 
-app = FastAPI()
+app = FastAPI(
+    title="PDF SOH Updater",
+    version="1.0.0"
+)
 
 
 @app.get("/")
 def root():
-    return {"status": "ok"}
+    return {
+        "status": "ok"
+    }
 
 
 @app.post("/update-pdf")
@@ -17,42 +23,89 @@ async def update_pdf(
     file: UploadFile = File(...),
     soh: str = Form(...)
 ):
+    """
+    Nahradi hodnotu SOH v PDF.
+    Napr:
+        SOH:55 %
+    za
+        SOH:87 %
+    """
+
     pdf_bytes = await file.read()
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as tmp:
         tmp.write(pdf_bytes)
-        input_file = tmp.name
+        input_path = tmp.name
 
-    output_file = input_file.replace(".pdf", "_out.pdf")
+    output_path = input_path.replace(
+        ".pdf",
+        "_updated.pdf"
+    )
 
-    doc = fitz.open(input_file)
+    doc = fitz.open(input_path)
 
     for page in doc:
 
-        matches = page.search_for("SOH:0 %")
+        text_dict = page.get_text("dict")
 
-        for rect in matches:
+        for block in text_dict.get("blocks", []):
 
-            page.draw_rect(
-                rect,
-                color=(1, 1, 1),
-                fill=(1, 1, 1)
-            )
+            for line in block.get("lines", []):
 
-            page.insert_text(
-                (rect.x0, rect.y1 - 2),
-                f"SOH:{soh} %",
-                fontsize=12
-            )
+                for span in line.get("spans", []):
 
-    doc.save(output_file)
+                    text = span.get("text", "")
+
+                    # najde SOH:xx %
+                    if re.match(r"SOH:\d+\s*%", text):
+
+                        rect = fitz.Rect(span["bbox"])
+
+                        # prekry povodny text
+                        page.draw_rect(
+                            rect,
+                            color=(1, 1, 1),
+                            fill=(1, 1, 1)
+                        )
+
+                        new_text = f"SOH:{soh} %"
+
+                        # mierne vacsie a vyssie
+                        font_size = span["size"] + 1
+
+                        page.insert_text(
+                            (
+                                rect.x0,
+                                rect.y0 + font_size - 1
+                            ),
+                            new_text,
+                            fontsize=font_size,
+                            fontname="helv",
+                            color=(0, 0, 0)
+                        )
+
+    doc.save(
+        output_path,
+        garbage=4,
+        deflate=True
+    )
     doc.close()
 
-    with open(output_file, "rb") as f:
+    with open(output_path, "rb") as f:
         result = f.read()
 
-    os.remove(input_file)
-    os.remove(output_file)
+    try:
+        os.remove(input_path)
+    except:
+        pass
+
+    try:
+        os.remove(output_path)
+    except:
+        pass
 
     return Response(
         content=result,
