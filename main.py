@@ -6,6 +6,7 @@ from reportlab.lib.utils import ImageReader
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.responses import Response
+from jinja2 import Environment, FileSystemLoader
 import fitz
 import tempfile
 import os
@@ -303,187 +304,19 @@ async def pdf_text(
 @app.post("/generate-report")
 async def generate_report(data: dict):
 
-
-    buffer = BytesIO()
-
-    c = canvas.Canvas(
-        buffer,
-        pagesize=A4
+    env = Environment(
+        loader=FileSystemLoader("templates")
     )
 
-    width, height = A4
-
-    #
-    # logo
-    #
-
-    try:
-        c.drawImage(
-            "logo.png",
-            170,
-            height - 170,
-            width=250,
-            height=120,
-            preserveAspectRatio=True,
-            mask="auto"
-        )
-    except:
-        pass
-
-    #
-    # titulok
-    #
-
-    y = height - 210
-
-    c.setFont(
-        "Helvetica-Bold",
-        22
+    template = env.get_template(
+        "report.html"
     )
 
-    c.drawCentredString(
-        width / 2,
-        y,
-        "Battery Health Report"
-    )
-
-    y -= 50
-
-    #
-    # SOH
-    #
-
-    c.setFillColor(
-        colors.green
-    )
-
-    c.setFont(
-        "Helvetica-Bold",
-        42
-    )
-
-    c.drawCentredString(
-        width / 2,
-        y,
-        f"SOH {data.get('soh','')}%"
-    )
-
-    c.setFillColor(
-        colors.black
-    )
-
-    y -= 70
-
-    #
-    # vozidlo
-    #
-
-    c.setFont(
-        "Helvetica",
-        11
-    )
-
-    lines = [
-
-        f"VIN: {data.get('vin','')}",
-        f"Manufacturer: {data.get('manufacturer','')}",
-        f"Model: {data.get('model','')}",
-        f"Year: {data.get('year','')}",
-        f"Date: {data.get('reportDate','')}",
-        f"Time: {data.get('reportTime','')}",
-
-        "",
-
-        "BATTERY",
-
-        f"SOC: {data.get('soc','')} %",
-        f"Pack Voltage: {data.get('packVoltage','')} V",
-        f"Current: {data.get('totalCurrent','')} A",
-
-        "",
-
-        "CELLS",
-
-        f"Max Cell Voltage: {data.get('maxCellVoltage','')} V",
-        f"Min Cell Voltage: {data.get('minCellVoltage','')} V",
-        f"Max Cell No: {data.get('maxVoltageCellNo','')}",
-        f"Min Cell No: {data.get('minVoltageCellNo','')}",
-        f"Cell Count: {data.get('cellCount','')}",
-        f"Cell Delta: {data.get('cellDelta','')} V",
-
-        "",
-
-        "TEMPERATURE",
-
-        f"Max Temp: {data.get('maxTemp','')} °C",
-        f"Min Temp: {data.get('minTemp','')} °C",
-        f"Temp Delta: {data.get('tempDelta','')} °C",
-        f"Temp Sensors: {data.get('tempSensorCount','')}"
-    ]
-
-    for line in lines:
-
-        if line in [
-            "BATTERY",
-            "CELLS",
-            "TEMPERATURE"
-        ]:
-
-            y -= 10
-
-            c.setFont(
-                "Helvetica-Bold",
-                14
-            )
-
-            c.drawString(
-                50,
-                y,
-                line
-            )
-
-            c.setFont(
-                "Helvetica",
-                11
-            )
-
-        else:
-
-            c.drawString(
-                50,
-                y,
-                line
-            )
-
-        y -= 18
-
-    #
-    # footer
-    #
-
-    c.setFont(
-        "Helvetica",
-        9
-    )
-
-    c.drawCentredString(
-        width / 2,
-        30,
-        "EV Diagnostika"
-    )
-
-    c.save()
-
-    pdf = buffer.getvalue()
-
-    buffer.close()
+    html = template.render(**data)
 
     return Response(
-        content=pdf,
-        media_type="application/pdf",
-        headers={
-            "Content-Disposition":
-            "attachment; filename=battery-report.pdf"
-        }
+        content=html,
+        media_type="text/html"
     )
+
 
