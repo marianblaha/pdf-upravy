@@ -526,10 +526,52 @@ body{
 
         <div class="soh-wrapper">
 
-            <div class="soh-status">
-                <h3>STAV BATÉRIE</h3>
-                <div class="soh-big">{{ soh }}%</div>
-            </div>
+			<div class="soh-status">
+
+				<h3>STAV BATÉRIE</h3>
+
+				<img
+					src="/static/icons/batterystate.png"
+					style="
+						width:120px;
+						margin-top:10px;
+					"
+				>
+
+				<div class="soh-big">
+
+					{% if soh|int >= 95 %}
+						VÝBORNÝ
+					{% elif soh|int >= 90 %}
+						VEĽMI DOBRÝ
+					{% elif soh|int >= 85 %}
+						DOBRÝ
+					{% elif soh|int >= 80 %}
+						ZVÝŠENÉ OPOTREBENIE
+					{% else %}
+						ODPORÚČANÁ KONTROLA
+					{% endif %}
+
+				</div>
+
+				<div
+					style="
+						margin-top:10px;
+						font-size:14px;
+					"
+				>
+
+					{% if soh|int >= 90 %}
+						NÍZKA MIERA DEGRADÁCIE
+					{% elif soh|int >= 80 %}
+						STREDNÁ MIERA DEGRADÁCIE
+					{% else %}
+						VYSOKÁ MIERA DEGRADÁCIE
+					{% endif %}
+
+				</div>
+
+			</div>
 
             <div class="soh-levels">
 
