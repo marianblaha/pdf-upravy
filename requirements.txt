@@ -3,4 +3,4 @@ uvicorn
 pymupdf
 python-multipart
 weasyprint
-jinja2
+reportlab
