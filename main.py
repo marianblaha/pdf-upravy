@@ -278,8 +278,6 @@ if " " in inspection_date:
     result["reportTime"] = report_time
 
 return JSONResponse(result)
-```
-
 
 
 @app.post("/pdf-text")
