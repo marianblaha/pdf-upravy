@@ -759,34 +759,98 @@ body{
 				</table>
             <div class="col-half">
 
-                <div class="section-title">
-                    5. TEPLOTY ČLÁNKOV
-                </div>
+				<div class="section-title">
+					5. TEPLOTY ČLÁNKOV
+				</div>
 
-                <div class="balance">
+				<div class="balance">
 
-                    <div class="balance-card">
-                        <div class="balance-title">MAX TEPLOTA</div>
-                        <div class="balance-value">
-                            {{ maxTemp }}
-                        </div>
-                    </div>
+					<div class="balance-card">
 
-                    <div class="balance-card">
-                        <div class="balance-title">MIN TEPLOTA</div>
-                        <div class="balance-value">
-                            {{ minTemp }}
-                        </div>
-                    </div>
+						<img
+							src="/static/icons/teplomer.png"
+							class="balance-icon"
+						>
 
-                    <div class="balance-card">
-                        <div class="balance-title">ROZDIEL</div>
-                        <div class="balance-value">
-                            {{ tempDelta }}
-                        </div>
-                    </div>
+						<div class="balance-title">
+							MAX TEPLOTA
+						</div>
 
-                </div>
+						<div class="balance-value">
+							{{ maxTemp }} °C
+						</div>
+
+					</div>
+
+					<div class="balance-card">
+
+						<img
+							src="/static/icons/teplomer.png"
+							class="balance-icon"
+						>
+
+						<div class="balance-title">
+							MIN TEPLOTA
+						</div>
+
+						<div class="balance-value">
+							{{ minTemp }} °C
+						</div>
+
+					</div>
+
+					<div class="balance-card">
+
+						<img
+							src="/static/icons/teplomer.png"
+							class="balance-icon"
+						>
+
+						<div class="balance-title">
+							ROZDIEL TEPLOT
+						</div>
+
+						<div class="balance-value">
+							{{ tempDelta }} °C
+						</div>
+
+					</div>
+
+				</div>
+
+				<table class="balance-table">
+
+					<tr>
+						<td colspan="2" class="balance-table-header">
+							ORIENTAČNÉ HODNOTENIE ROZDIELU TEPLOTY
+						</td>
+					</tr>
+
+					<tr>
+						<td>&lt; 5 °C</td>
+						<td>
+							<span class="dot" style="background:#4caf50;"></span>
+							Výborné
+						</td>
+					</tr>
+
+					<tr>
+						<td>5 – 10 °C</td>
+						<td>
+							<span class="dot" style="background:#ffc107;"></span>
+							Normálne
+						</td>
+					</tr>
+
+					<tr>
+						<td>&gt; 10 °C</td>
+						<td>
+							<span class="dot" style="background:#f44336;"></span>
+							Skontrolovať chladenie
+						</td>
+					</tr>
+
+				</table>
 
             </div>
 
