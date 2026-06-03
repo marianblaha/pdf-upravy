@@ -163,6 +163,7 @@ def extract_html_data(html: str):
 @app.post("/parse-html")
 async def parse_html(
     file: UploadFile = File(...),
+    model: str = Form(""),
     soh: str = Form("")
 ):
 
@@ -175,6 +176,7 @@ async def parse_html(
 
     result = extract_html_data(html_text)
 
+    result["model"] = model
     result["soh"] = soh
 
     return JSONResponse(result)
