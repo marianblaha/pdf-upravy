@@ -313,6 +313,16 @@ body{
     margin-right:8px;
 }
 
+.balance-active{
+    background:#2e7d32;
+    color:white;
+    font-weight:bold;
+}
+
+.balance-active .dot{
+    border:1px solid white;
+}
+
 /* CONCLUSION */
 
 .conclusion{
@@ -745,7 +755,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if (cellDelta|float * 1000) <= 10 %}balance-active{% endif %}">
 						<td>0 – 10 mV</td>
 						<td>
 							<span class="dot" style="background:#4caf50;"></span>
@@ -753,7 +763,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if (cellDelta|float * 1000) > 10 and (cellDelta|float * 1000) <= 20 %}balance-active{% endif %}">
 						<td>10 – 20 mV</td>
 						<td>
 							<span class="dot" style="background:#8bc34a;"></span>
@@ -761,7 +771,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if (cellDelta|float * 1000) > 20 and (cellDelta|float * 1000) <= 30 %}balance-active{% endif %}">
 						<td>20 – 30 mV</td>
 						<td>
 							<span class="dot" style="background:#ffc107;"></span>
@@ -769,7 +779,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if (cellDelta|float * 1000) > 30 and (cellDelta|float * 1000) <= 50 %}balance-active{% endif %}">
 						<td>30 – 50 mV</td>
 						<td>
 							<span class="dot" style="background:#ff9800;"></span>
@@ -777,7 +787,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if (cellDelta|float * 1000) > 50 %}balance-active{% endif %}">
 						<td>&gt; 50 mV</td>
 						<td>
 							<span class="dot" style="background:#f44336;"></span>
