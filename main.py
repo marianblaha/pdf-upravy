@@ -1,3 +1,4 @@
+from fastapi.responses import JSONResponse
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.responses import Response
 import fitz
@@ -115,3 +116,57 @@ async def update_pdf(
             "attachment; filename=updated.pdf"
         }
     )
+
+def extract_html_data(html: str):
+
+    def find(pattern):
+        m = re.search(pattern, html, re.I | re.S)
+        return m.group(1).strip() if m else ""
+
+    vin = find(
+        r'VIN.*?</b>\s*([^<]+)'
+    )
+
+    manufacturer_raw = find(
+        r'Vehicle manufacturer/model:\s*</b>\s*([^<]+)'
+    )
+
+    manufacturer = ""
+
+    if manufacturer_raw:
+        manufacturer = manufacturer_raw.split("/")[0].strip()
+
+    year = find(
+        r'Year of manufacture:\s*</b>\s*([^<]+)'
+    )
+
+    inspection_date = find(
+        r'Time and date of inspection.*?</b>\s*([^<]+)'
+    )
+
+    return {
+        "vin": vin,
+        "manufacturer": manufacturer,
+        "year": year,
+        "inspection_date": inspection_date
+    }
+
+
+@app.post("/parse-html")
+async def parse_html(
+    file: UploadFile = File(...),
+    model: str = Form("")
+):
+
+    html_bytes = await file.read()
+
+    html_text = html_bytes.decode(
+        "utf-8",
+        errors="ignore"
+    )
+
+    result = extract_html_data(html_text)
+
+    result["model"] = model
+
+    return JSONResponse(result)
