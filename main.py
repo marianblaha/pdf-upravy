@@ -203,6 +203,7 @@ def extract_pdf_data(text: str):
         )
     }
 
+
 @app.post("/parse-html")
 async def parse_html(
 html_file: UploadFile = File(...),
@@ -211,9 +212,7 @@ model: str = Form(""),
 soh: str = Form("")
 ):
 
-#
 # HTML
-#
 
 html_bytes = await html_file.read()
 
@@ -226,9 +225,7 @@ result = extract_html_data(
     html_text
 )
 
-#
 # PDF
-#
 
 pdf_bytes = await pdf_file.read()
 
@@ -248,18 +245,14 @@ pdf_data = extract_pdf_data(
     pdf_text
 )
 
-#
 # merge
-#
 
 result.update(pdf_data)
 
 result["model"] = model
 result["soh"] = soh
 
-#
 # report date / time
-#
 
 inspection_date = result.get(
     "inspection_date",
