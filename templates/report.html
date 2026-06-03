@@ -866,7 +866,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if tempDelta|float < 5 %}balance-active{% endif %}">
 						<td>&lt; 5 °C</td>
 						<td>
 							<span class="dot" style="background:#4caf50;"></span>
@@ -874,7 +874,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if tempDelta|float >= 5 and tempDelta|float <= 10 %}balance-active{% endif %}">
 						<td>5 – 10 °C</td>
 						<td>
 							<span class="dot" style="background:#ffc107;"></span>
@@ -882,7 +882,7 @@ body{
 						</td>
 					</tr>
 
-					<tr>
+					<tr class="{% if tempDelta|float > 10 %}balance-active{% endif %}">
 						<td>&gt; 10 °C</td>
 						<td>
 							<span class="dot" style="background:#f44336;"></span>
