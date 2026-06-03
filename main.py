@@ -3,6 +3,7 @@ from fastapi.responses import Response, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from jinja2 import Environment, FileSystemLoader
+from weasyprint import HTML
 
 import fitz
 import tempfile
@@ -355,3 +356,29 @@ async def preview():
         template.render(**sample_data)
     )
 
+@app.post("/generate-report-pdf")
+async def generate_report_pdf(data: dict):
+
+    env = Environment(
+        loader=FileSystemLoader("templates")
+    )
+
+    template = env.get_template(
+        "report.html"
+    )
+
+    html = template.render(**data)
+
+    pdf = HTML(
+        string=html,
+        base_url="https://pdf-upravy-production.up.railway.app"
+    ).write_pdf()
+
+    return Response(
+        content=pdf,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition":
+            "attachment; filename=report.pdf"
+        }
+    )
