@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.responses import Response, JSONResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 from jinja2 import Environment, FileSystemLoader
 from playwright.async_api import async_playwright
@@ -12,6 +13,12 @@ import re
 app = FastAPI(
     title="PDF SOH Updater",
     version="1.0.0"
+)
+
+app.mount(
+    "/static",
+    StaticFiles(directory="static"),
+    name="static"
 )
 
 
