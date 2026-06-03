@@ -26,11 +26,25 @@ body{
     background:#000;
     color:white;
     border-bottom:4px solid #4CAF50;
+    position:relative;
+    overflow:hidden;
 }
 
 .header-inner{
     display:flex;
     align-items:center;
+    position:relative;
+    z-index:2;
+}
+
+.header-circuit{
+    position:absolute;
+    top:0;
+    right:0;
+    width:320px;
+    height:auto;
+    opacity:0.75;
+    z-index:1;
 }
 
 .logo-box{
@@ -281,6 +295,10 @@ body{
 <div class="page">
 
     <div class="header">
+	    <img
+			src="/static/icons/circuit.png"
+			class="header-circuit"
+		>
         <div class="header-inner">
 
             <div class="logo-box">
