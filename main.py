@@ -180,3 +180,27 @@ async def parse_html(
     result["soh"] = soh
 
     return JSONResponse(result)
+
+@app.post("/pdf-text")
+async def pdf_text(
+    file: UploadFile = File(...)
+):
+    import fitz
+
+    pdf_bytes = await file.read()
+
+    doc = fitz.open(
+        stream=pdf_bytes,
+        filetype="pdf"
+    )
+
+    text = ""
+
+    for page in doc:
+        text += page.get_text()
+
+    doc.close()
+
+    return {
+        "text": text
+    }    
