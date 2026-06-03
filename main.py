@@ -25,11 +25,8 @@ async def update_pdf(
     soh: str = Form(...)
 ):
     """
-    Nahradi hodnotu SOH v PDF.
-    Napr:
-        SOH:55 %
-    za
-        SOH:87 %
+    Pôvodný POC endpoint.
+    Môžeš ho zatiaľ nechať.
     """
 
     pdf_bytes = await file.read()
@@ -60,12 +57,10 @@ async def update_pdf(
 
                     text = span.get("text", "")
 
-                    # najde SOH:xx %
                     if re.match(r"SOH:\d+\s*%", text):
 
                         rect = fitz.Rect(span["bbox"])
 
-                        # prekry povodny text
                         page.draw_rect(
                             rect,
                             color=(1, 1, 1),
@@ -74,7 +69,6 @@ async def update_pdf(
 
                         new_text = f"SOH:{soh} %"
 
-                        # mierne vacsie a vyssie
                         font_size = span["size"] + 1
 
                         page.insert_text(
@@ -93,6 +87,7 @@ async def update_pdf(
         garbage=4,
         deflate=True
     )
+
     doc.close()
 
     with open(output_path, "rb") as f:
@@ -116,6 +111,7 @@ async def update_pdf(
             "attachment; filename=updated.pdf"
         }
     )
+
 
 def extract_html_data(html: str):
 
@@ -155,54 +151,120 @@ def extract_html_data(html: str):
 def extract_pdf_data(text: str):
 
     def find(pattern):
-        m = re.search(pattern, text, re.I)
+        m = re.search(
+            pattern,
+            text,
+            re.I | re.S
+        )
         return m.group(1).strip() if m else ""
 
     return {
+
+        # hlavný blok
         "soc": find(r"SOC:(\d+\.\d+)"),
         "packVoltage": find(r"Total voltage:(\d+\.\d+)"),
+        "totalCurrent": find(r"Total current:([-\d\.]+)"),
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
         "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
 
-        "maxVoltageCellNo": find(r"Max-voltage cell No\.:(\d+)"),
-        "minVoltageCellNo": find(r"Min-voltage cell No\.:(.+?)\n"),
+        "maxVoltageCellNo": find(
+            r"Max-voltage cell No\.:(\d+)"
+        ),
 
-        "cellDelta": find(r"Voltage difference:(\d+\.\d+)"),
+        "minVoltageCellNo": find(
+            r"Min-voltage cell No\.:(.+?)\n"
+        ),
 
-        "maxTemp": find(r"Temperature℃.*?Max:(\d+)"),
-        "minTemp": find(r"Temperature℃.*?Min:(\d+)"),
+        # Voltage sekcia
+        "cellCount": find(
+            r"VoltageV \((\d+)\)"
+        ),
 
-        "tempDelta": find(r"Temperature difference:(\d+\.\d+)")
+        "cellDelta": find(
+            r"Voltage difference:(\d+\.\d+)"
+        ),
+
+        # Temperature sekcia
+        "tempSensorCount": find(
+            r"Temperature℃ \((\d+)\)"
+        ),
+
+        "maxTemp": find(
+            r"Temperature℃.*?Max:(\d+)"
+        ),
+
+        "minTemp": find(
+            r"Temperature℃.*?Min:(\d+)"
+        ),
+
+        "tempDelta": find(
+            r"Temperature difference:(\d+\.\d+)"
+        )
     }
 
 
 @app.post("/parse-html")
 async def parse_html(
-    file: UploadFile = File(...),
+    html_file: UploadFile = File(...),
+    pdf_file: UploadFile = File(...),
     model: str = Form(""),
     soh: str = Form("")
 ):
 
-    html_bytes = await file.read()
+    #
+    # HTML
+    #
+
+    html_bytes = await html_file.read()
 
     html_text = html_bytes.decode(
         "utf-8",
         errors="ignore"
     )
 
-    result = extract_html_data(html_text)
+    result = extract_html_data(
+        html_text
+    )
+
+    #
+    # PDF
+    #
+
+    pdf_bytes = await pdf_file.read()
+
+    doc = fitz.open(
+        stream=pdf_bytes,
+        filetype="pdf"
+    )
+
+    pdf_text = ""
+
+    for page in doc:
+        pdf_text += page.get_text()
+
+    doc.close()
+
+    pdf_data = extract_pdf_data(
+        pdf_text
+    )
+
+    #
+    # merge
+    #
+
+    result.update(pdf_data)
 
     result["model"] = model
     result["soh"] = soh
 
     return JSONResponse(result)
 
+
 @app.post("/pdf-text")
 async def pdf_text(
     file: UploadFile = File(...)
 ):
-    import fitz
 
     pdf_bytes = await file.read()
 
@@ -220,4 +282,4 @@ async def pdf_text(
 
     return {
         "text": text
-    }    
+    }
