@@ -1,69 +1,260 @@
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    margin: 30px;
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:white;
+    color:#111;
 }
 
-.logo{
-    text-align:center;
+.page{
+    width:100%;
 }
 
-.logo img{
-    width:250px;
+/* HEADER */
+
+.header{
+    background:#000;
+    color:white;
+    border-bottom:4px solid #4CAF50;
 }
 
-.title{
-    text-align:center;
-    margin-top:20px;
-    font-size:28px;
+.header-inner{
+    display:flex;
+    align-items:center;
+}
+
+.logo-box{
+    width:320px;
+    padding:10px;
+}
+
+.logo-box img{
+    width:100%;
+}
+
+.title-box{
+    flex:1;
+    padding:20px;
+}
+
+.main-title{
+    font-size:64px;
+    font-weight:900;
+    color:#a6ff00;
+    line-height:1;
+}
+
+.sub-title{
+    font-size:26px;
     font-weight:bold;
+    color:#8ddc00;
+    margin-top:10px;
 }
 
-.subtitle{
-    text-align:center;
-    color:#666;
-    margin-bottom:30px;
+.features{
+    display:flex;
+    gap:40px;
+    margin-top:25px;
+    font-size:15px;
 }
 
-.section{
-    margin-top:20px;
+.features div{
+    color:white;
 }
+
+/* CONTENT */
+
+.content{
+    padding:24px;
+}
+
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.col-half{
+    width:50%;
+}
+
+/* SECTION */
 
 .section-title{
-    background:#16a34a;
+    background:#000;
     color:white;
-    padding:8px;
+    font-size:18px;
     font-weight:bold;
+    padding:10px 14px;
+    margin-bottom:12px;
 }
 
-table{
+/* VEHICLE */
+
+.vehicle-table{
     width:100%;
     border-collapse:collapse;
 }
 
-td{
-    padding:8px;
-    border-bottom:1px solid #ddd;
+.vehicle-table td{
+    border:1px solid #dcdcdc;
+    padding:14px;
+    font-size:16px;
 }
 
-.soh{
+.vehicle-table td:first-child{
+    width:45%;
+    background:#fafafa;
+}
+
+/* SUMMARY */
+
+.summary{
+    display:flex;
+}
+
+.summary-card{
+    flex:1;
+    border:1px solid #dcdcdc;
     text-align:center;
-    font-size:64px;
-    color:#16a34a;
+    padding:20px;
+}
+
+.summary-title{
+    font-size:18px;
     font-weight:bold;
-    margin:30px 0;
 }
 
-.footer{
-    margin-top:40px;
+.summary-value{
+    font-size:64px;
+    font-weight:bold;
+    color:#2e7d32;
+    margin-top:20px;
+}
+
+.summary-label{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* SOH */
+
+.soh-wrapper{
+    display:flex;
+    gap:16px;
+}
+
+.soh-status{
+    width:230px;
+    border:1px solid #ddd;
     text-align:center;
-    color:#666;
+    padding:20px;
+}
+
+.soh-big{
+    font-size:48px;
+    color:#2e7d32;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+.soh-levels{
+    flex:1;
+}
+
+.level-grid{
+    display:flex;
+}
+
+.level{
+    flex:1;
+    border:1px solid #ddd;
+    text-align:center;
+    padding:18px;
+}
+
+.level.active{
+    background:#2e7d32;
+    color:white;
+}
+
+.level strong{
+    display:block;
+    font-size:28px;
+}
+
+.soh-note{
+    margin-top:12px;
+    border-left:5px solid #2e7d32;
+    padding:15px;
+    font-size:16px;
+}
+
+/* BALANCE */
+
+.balance{
+    display:flex;
+    gap:10px;
+}
+
+.balance-card{
+    flex:1;
+    border:1px solid #ddd;
+    text-align:center;
+    padding:16px;
+}
+
+.balance-title{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.balance-value{
+    font-size:40px;
+    color:#2e7d32;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* CONCLUSION */
+
+.conclusion{
+    border:1px solid #ddd;
+    padding:20px;
+}
+
+.conclusion ul{
+    margin:0;
+}
+
+.conclusion li{
+    margin-bottom:12px;
+    font-size:18px;
+}
+
+/* DISCLAIMER */
+
+.disclaimer{
+    background:#000;
+    color:white;
+    padding:20px;
+    margin-top:20px;
+}
+
+.disclaimer-title{
+    font-weight:bold;
+    margin-bottom:10px;
 }
 
 </style>
@@ -71,74 +262,266 @@ td{
 
 <body>
 
-<div class="logo">
-    <img src="file:///app/logo.png">
-</div>
+<div class="page">
 
-<div class="title">
-EV Battery Health Report
-</div>
+    <div class="header">
+        <div class="header-inner">
 
-<div class="subtitle">
-EV Diagnostika
-</div>
+            <div class="logo-box">
+                <img src="/static/logo.png">
+            </div>
 
-<table>
-<tr><td>VIN</td><td>{{ vin }}</td></tr>
-<tr><td>Výrobca</td><td>{{ manufacturer }}</td></tr>
-<tr><td>Model</td><td>{{ model }}</td></tr>
-<tr><td>Rok výroby</td><td>{{ year }}</td></tr>
-<tr><td>Dátum reportu</td><td>{{ reportDate }}</td></tr>
-<tr><td>Čas reportu</td><td>{{ reportTime }}</td></tr>
-</table>
+            <div class="title-box">
 
-<div class="soh">
-SOH {{ soh }}%
-</div>
+                <div class="main-title">
+                    EV DIAGNOSTIKA
+                </div>
 
-<div class="section">
-<div class="section-title">
-Batéria
-</div>
+                <div class="sub-title">
+                    PROTOKOL STAVU VYSOKONAPÄŤOVEJ BATÉRIE
+                </div>
 
-<table>
-<tr><td>SOC</td><td>{{ soc }} %</td></tr>
-<tr><td>Pack Voltage</td><td>{{ packVoltage }} V</td></tr>
-<tr><td>Current</td><td>{{ totalCurrent }} A</td></tr>
-<tr><td>Cell Delta</td><td>{{ cellDelta }} V</td></tr>
-</table>
-</div>
+                <div class="features">
+                    <div>Diagnostika elektromobilov</div>
+                    <div>Čítanie chýb a kódov</div>
+                    <div>Analýza batérie</div>
+                    <div>Kontrola nabíjania</div>
+                </div>
 
-<div class="section">
-<div class="section-title">
-Články
-</div>
+            </div>
 
-<table>
-<tr><td>Max Cell Voltage</td><td>{{ maxCellVoltage }} V</td></tr>
-<tr><td>Min Cell Voltage</td><td>{{ minCellVoltage }} V</td></tr>
-<tr><td>Max Cell No</td><td>{{ maxVoltageCellNo }}</td></tr>
-<tr><td>Min Cell No</td><td>{{ minVoltageCellNo }}</td></tr>
-<tr><td>Počet článkov</td><td>{{ cellCount }}</td></tr>
-</table>
-</div>
+        </div>
+    </div>
 
-<div class="section">
-<div class="section-title">
-Teploty
-</div>
+    <div class="content">
 
-<table>
-<tr><td>Max Temp</td><td>{{ maxTemp }} °C</td></tr>
-<tr><td>Min Temp</td><td>{{ minTemp }} °C</td></tr>
-<tr><td>Temp Delta</td><td>{{ tempDelta }} °C</td></tr>
-<tr><td>Počet senzorov</td><td>{{ tempSensorCount }}</td></tr>
-</table>
-</div>
+        <!-- ROW 1 -->
 
-<div class="footer">
-EV Diagnostika<br>
-+421 903 400 242
+        <div class="row">
+
+            <div class="col-half">
+
+                <div class="section-title">
+                    1. IDENTIFIKÁCIA VOZIDLA
+                </div>
+
+                <table class="vehicle-table">
+
+                    <tr>
+                        <td>VIN</td>
+                        <td>{{ vin }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Značka / Model</td>
+                        <td>{{ manufacturer }} {{ model }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Rok výroby</td>
+                        <td>{{ year }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Stav kilometrov</td>
+                        <td>N/A</td>
+                    </tr>
+
+                    <tr>
+                        <td>Miesto merania</td>
+                        <td>EV Diagnostika</td>
+                    </tr>
+
+                    <tr>
+                        <td>Dátum a čas</td>
+                        <td>{{ reportDate }} {{ reportTime }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="col-half">
+
+                <div class="section-title">
+                    2. SÚHRN STAVU BATÉRIE
+                </div>
+
+                <div class="summary">
+
+                    <div class="summary-card">
+                        <div class="summary-title">SOH</div>
+                        <div class="summary-value">{{ soh }}%</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-title">SOC</div>
+                        <div class="summary-value">{{ soc }}%</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-title">NAPÄTIE</div>
+                        <div class="summary-value">{{ packVoltage }}</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SOH -->
+
+        <div class="section-title">
+            3. HODNOTENIE STAVU BATÉRIE (SOH)
+        </div>
+
+        <div class="soh-wrapper">
+
+            <div class="soh-status">
+                <h3>STAV BATÉRIE</h3>
+                <div class="soh-big">{{ soh }}%</div>
+            </div>
+
+            <div class="soh-levels">
+
+                <div class="level-grid">
+
+                    <div class="level">
+                        <strong>>95%</strong>
+                        Výborný stav
+                    </div>
+
+                    <div class="level">
+                        <strong>90-95%</strong>
+                        Veľmi dobrý stav
+                    </div>
+
+                    <div class="level">
+                        <strong>85-90%</strong>
+                        Dobrý stav
+                    </div>
+
+                    <div class="level">
+                        <strong>80-85%</strong>
+                        Zvýšené opotrebenie
+                    </div>
+
+                    <div class="level active">
+                        <strong><80%</strong>
+                        Odporúčaná kontrola
+                    </div>
+
+                </div>
+
+                <div class="soh-note">
+                    Hodnota SOH vyjadruje aktuálny stav zdravia trakčnej batérie.
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ROW -->
+
+        <div class="row">
+
+            <div class="col-half">
+
+                <div class="section-title">
+                    4. BALANS ČLÁNKOV
+                </div>
+
+                <div class="balance">
+
+                    <div class="balance-card">
+                        <div class="balance-title">MAX NAPÄTIE</div>
+                        <div class="balance-value">
+                            {{ maxCellVoltage }}
+                        </div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-title">MIN NAPÄTIE</div>
+                        <div class="balance-value">
+                            {{ minCellVoltage }}
+                        </div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-title">ROZDIEL</div>
+                        <div class="balance-value">
+                            {{ cellDelta }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-half">
+
+                <div class="section-title">
+                    5. TEPLOTY ČLÁNKOV
+                </div>
+
+                <div class="balance">
+
+                    <div class="balance-card">
+                        <div class="balance-title">MAX TEPLOTA</div>
+                        <div class="balance-value">
+                            {{ maxTemp }}
+                        </div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-title">MIN TEPLOTA</div>
+                        <div class="balance-value">
+                            {{ minTemp }}
+                        </div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-title">ROZDIEL</div>
+                        <div class="balance-value">
+                            {{ tempDelta }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-title">
+            6. ZÁVER
+        </div>
+
+        <div class="conclusion">
+
+            <ul>
+                <li>Trakčná batéria bola diagnostikovaná.</li>
+                <li>Namerané SOH: {{ soh }} %.</li>
+                <li>Balans článkov: {{ cellDelta }} V.</li>
+                <li>Teplotný rozdiel: {{ tempDelta }} °C.</li>
+            </ul>
+
+        </div>
+
+        <div class="disclaimer">
+
+            <div class="disclaimer-title">
+                7. DISCLAIMER
+            </div>
+
+            Diagnostika predstavuje stav vozidla v čase merania.
+            Výsledky sú orientačné a nenahrádzajú autorizovanú technickú kontrolu.
+
+        </div>
+
+    </div>
+
 </div>
 
 </body>
