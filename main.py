@@ -328,3 +328,22 @@ async def preview():
     return HTMLResponse(
         open("templates/report.html", encoding="utf-8").read()
     )
+    
+@app.get("/test-playwright")
+async def test_playwright():
+
+    async with async_playwright() as p:
+
+        browser = await p.chromium.launch()
+
+        page = await browser.new_page()
+
+        await page.goto("https://example.com")
+
+        title = await page.title()
+
+        await browser.close()
+
+        return {
+            "title": title
+        }
