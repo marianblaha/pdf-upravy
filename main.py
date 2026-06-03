@@ -316,4 +316,8 @@ async def generate_report(data: dict):
         media_type="text/html"
     )
 
-
+@app.get("/preview")
+async def preview():
+    return HTMLResponse(
+        open("templates/report.html", encoding="utf-8").read()
+    )
