@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
+from pathlib import Path
 
 import fitz
 import tempfile
@@ -369,9 +370,11 @@ async def generate_report_pdf(data: dict):
 
     html = template.render(**data)
 
+    base_path = Path(__file__).resolve().parent
+
     pdf = HTML(
         string=html,
-        base_url="https://pdf-upravy-production.up.railway.app"
+        base_url=str(base_path)
     ).write_pdf()
 
     return Response(
