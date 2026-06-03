@@ -354,3 +354,14 @@ async def test_playwright():
         return {
             "title": title
         }
+
+@app.get("/playwright-path")
+async def playwright_path():
+
+    import os
+
+    return {
+        "cache_exists": os.path.exists("/root/.cache/ms-playwright"),
+        "cache_dir_exists": os.path.exists("/root/.cache"),
+        "cache_contents": os.listdir("/root/.cache") if os.path.exists("/root/.cache") else []
+    }        
