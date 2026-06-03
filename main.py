@@ -132,9 +132,16 @@ def extract_html_data(html: str):
     )
 
     manufacturer = ""
+    model = ""
 
     if manufacturer_raw:
-        manufacturer = manufacturer_raw.split("/")[0].strip()
+
+        parts = manufacturer_raw.split("/", 1)
+
+        manufacturer = parts[0].strip()
+
+        if len(parts) > 1:
+            model = parts[1].strip()
 
     year = find(
         r'Year of manufacture:\s*</b>\s*([^<]+)'
@@ -147,6 +154,7 @@ def extract_html_data(html: str):
     return {
         "vin": vin,
         "manufacturer": manufacturer,
+        "model": model,
         "year": year,
         "inspection_date": inspection_date
     }
@@ -155,7 +163,7 @@ def extract_html_data(html: str):
 @app.post("/parse-html")
 async def parse_html(
     file: UploadFile = File(...),
-    model: str = Form("")
+    soh: str = Form("")
 ):
 
     html_bytes = await file.read()
@@ -167,6 +175,6 @@ async def parse_html(
 
     result = extract_html_data(html_text)
 
-    result["model"] = model
+    result["soh"] = soh
 
     return JSONResponse(result)
