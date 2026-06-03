@@ -318,13 +318,26 @@ body{
 .conclusion{
     border:1px solid #ddd;
     padding:20px;
+
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
 }
 
-.conclusion ul{
+.conclusion-icon{
+    width:140px;
+    flex-shrink:0;
+}
+
+.conclusion-content{
+    flex:1;
+}
+
+.conclusion-content ul{
     margin:0;
 }
 
-.conclusion li{
+.conclusion-content li{
     margin-bottom:12px;
     font-size:18px;
 }
@@ -341,6 +354,12 @@ body{
 .disclaimer-title{
     font-weight:bold;
     margin-bottom:10px;
+}
+
+.disclaimer-icon{
+    width:70px;
+    display:block;
+    margin:10px 0 15px 0;
 }
 
 </style>
@@ -861,25 +880,82 @@ body{
             6. ZÁVER
         </div>
 
-        <div class="conclusion">
+		<div class="conclusion">
 
-            <ul>
-                <li>Trakčná batéria bola diagnostikovaná.</li>
-                <li>Namerané SOH: {{ soh }} %.</li>
-                <li>Balans článkov: {{ cellDelta }} V.</li>
-                <li>Teplotný rozdiel: {{ tempDelta }} °C.</li>
-            </ul>
+			<img
+				src="/static/icons/batterystate.png"
+				class="conclusion-icon"
+			>
 
-        </div>
+			<div class="conclusion-content">
+
+				<ul>
+					<li>
+						Trakčná batéria bola diagnostikovaná a je
+						{% if soh|int >= 95 %}
+							vo výbornom stave.
+						{% elif soh|int >= 90 %}
+							vo veľmi dobrom stave.
+						{% elif soh|int >= 85 %}
+							v dobrom stave.
+						{% elif soh|int >= 80 %}
+							v stave so zvýšeným opotrebením.
+						{% else %}
+							v stave odporúčajúcom kontrolu.
+						{% endif %}
+					</li>
+					<li>Namerané SOH: {{ soh }} %.</li>
+					<li>
+						Balans článkov je
+
+						{% set delta = (cellDelta|float * 1000) %}
+
+						{% if delta <= 10 %}
+							výborný ({{ delta|round|int }} mV).
+						{% elif delta <= 20 %}
+							veľmi dobrý ({{ delta|round|int }} mV).
+						{% elif delta <= 30 %}
+							normálny ({{ delta|round|int }} mV).
+						{% elif delta <= 50 %}
+							odporúčaný na sledovanie ({{ delta|round|int }} mV).
+						{% else %}
+							odporúčaný na kontrolu ({{ delta|round|int }} mV).
+						{% endif %}
+					</li>
+					<li>
+						{% if soh|int >= 90 %}
+							Odporúčame pokračovať v bežnom používaní vozidla a pravidelne monitorovať stav trakčnej batérie.
+						{% elif soh|int >= 80 %}
+							Odporúčame pokračovať v používaní vozidla a sledovať vývoj stavu trakčnej batérie pri pravidelných kontrolách.
+						{% else %}
+							Odporúčame zvýšenú pozornosť stavu trakčnej batérie a pravidelné odborné kontroly.
+						{% endif %}
+					</li>
+
+				</ul>
+
+			</div>
+
+		</div>
 
         <div class="disclaimer">
 
-            <div class="disclaimer-title">
-                7. DISCLAIMER
-            </div>
+			<div class="disclaimer-title">
+				7. DISCLAIMER
+			</div>
 
-            Diagnostika predstavuje stav vozidla v čase merania.
-            Výsledky sú orientačné a nenahrádzajú autorizovanú technickú kontrolu.
+			<img
+				src="/static/icons/disclaimersmall.png"
+				class="disclaimer-icon"
+			>
+
+			Diagnostika predstavuje stav vozidla a trakčnej batérie v čase vykonania merania.<br><br>
+
+			Výsledky uvedené v tomto reporte majú informatívny a orientačný charakter a nenahrádzajú odbornú technickú kontrolu, servisnú diagnostiku ani posúdenie výrobcom vozidla.<br><br>
+
+			Hodnota SOH a ostatné namerané parametre sú vypočítané na základe údajov poskytnutých riadiacimi jednotkami vozidla a môžu sa líšiť od hodnôt uvádzaných výrobcom.<br><br>
+
+			EV Diagnostika nenesie zodpovednosť za prípadné škody, finančné straty, rozhodnutia o kúpe alebo predaji vozidla ani za následky vyplývajúce z použitia informácií uvedených v tomto reporte.
 
         </div>
 
