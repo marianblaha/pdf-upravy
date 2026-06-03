@@ -335,7 +335,11 @@ async def test_playwright():
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            args=["--no-sandbox"]
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox"
+            ]
         )
 
         page = await browser.new_page()
