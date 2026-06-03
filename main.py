@@ -382,3 +382,29 @@ async def debug_chromium():
     return {
         "chromium": chromium
     }
+
+@app.get("/debug-browsers")
+async def debug_browsers():
+
+    import subprocess
+
+    result = {}
+
+    for cmd in [
+        "chromium",
+        "chromium-browser",
+        "google-chrome",
+        "google-chrome-stable"
+    ]:
+        try:
+            path = subprocess.check_output(
+                ["which", cmd],
+                text=True
+            ).strip()
+
+            result[cmd] = path
+
+        except:
+            result[cmd] = "not found"
+
+    return result
