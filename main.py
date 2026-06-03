@@ -295,29 +295,3 @@ async def pdf_text(
         "text": text
     }
 
-@app.post("/generate-report")
-async def generate_report(data: dict):
-
-    env = Environment(
-        loader=FileSystemLoader("templates")
-    )
-
-    template = env.get_template(
-        "report.html"
-    )
-
-    html = template.render(**data)
-
-    pdf = HTML(
-        string=html,
-        base_url="/app"
-    ).write_pdf()
-
-    return Response(
-        content=pdf,
-        media_type="application/pdf",
-        headers={
-            "Content-Disposition":
-            "attachment; filename=battery-report.pdf"
-        }
-    )
