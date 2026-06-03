@@ -191,6 +191,17 @@ body{
     font-weight:bold;
 }
 
+.summary-icon{
+    height:95px;
+    margin-top:20px;
+    margin-bottom:10px;
+    object-fit:contain;
+}
+
+.summary-unit{
+    font-size:28px;
+}
+
 /* SOH */
 
 .soh-wrapper{
@@ -444,8 +455,22 @@ body{
                 <div class="summary">
 
                     <div class="summary-card">
-                        <div class="summary-title">SOH</div>
-                        <div class="summary-value">{{ soh }}%</div>
+						<div class="summary-title">
+							SOH
+						</div>
+
+						<img
+							src="/static/icons/soh.png"
+							class="summary-icon"
+						>
+
+						<div class="summary-value">
+							{{ soh }}%
+						</div>
+
+						<div class="summary-label">
+							STAV BATÉRIE
+						</div>
                     </div>
 
                     <div class="summary-card">
