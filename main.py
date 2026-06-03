@@ -329,7 +329,6 @@ async def preview():
         open("templates/report.html", encoding="utf-8").read()
     )
     
-
 @app.get("/test-playwright")
 async def test_playwright():
     async with async_playwright() as p:
