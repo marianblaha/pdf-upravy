@@ -636,35 +636,34 @@ body{
 			</div>
 
             <div class="soh-levels">
+				<div class="level-grid">
 
-                <div class="level-grid">
+					<div class="level {% if soh|int >= 95 %}active{% endif %}">
+						<strong>&gt;95%</strong>
+						Výborný stav
+					</div>
 
-                    <div class="level">
-                        <strong>>95%</strong>
-                        Výborný stav
-                    </div>
+					<div class="level {% if soh|int >= 90 and soh|int < 95 %}active{% endif %}">
+						<strong>90-95%</strong>
+						Veľmi dobrý stav
+					</div>
 
-                    <div class="level">
-                        <strong>90-95%</strong>
-                        Veľmi dobrý stav
-                    </div>
+					<div class="level {% if soh|int >= 85 and soh|int < 90 %}active{% endif %}">
+						<strong>85-90%</strong>
+						Dobrý stav
+					</div>
 
-                    <div class="level">
-                        <strong>85-90%</strong>
-                        Dobrý stav
-                    </div>
-
-                    <div class="level">
-                        <strong>80-85%</strong>
-                        Zvýšené opotrebenie
-                    </div>
+					<div class="level {% if soh|int >= 80 and soh|int < 85 %}active{% endif %}">
+						<strong>80-85%</strong>
+						Zvýšené opotrebenie
+					</div>
 
 					<div class="level {% if soh|int < 80 %}active{% endif %}">
-                        <strong>&lt;80%</strong>
-                        Odporúčaná kontrola
-                    </div>
+						<strong>&lt;80%</strong>
+						Odporúčaná kontrola
+					</div>
 
-                </div>
+				</div>
 
                 <div class="soh-note">
                     Hodnota SOH vyjadruje aktuálny stav zdravia trakčnej batérie.
