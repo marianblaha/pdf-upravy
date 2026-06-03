@@ -3,4 +3,4 @@ uvicorn
 pymupdf
 python-multipart
 jinja2
-playwright
+weasyprint

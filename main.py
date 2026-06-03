@@ -3,7 +3,8 @@ from fastapi.responses import Response, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from jinja2 import Environment, FileSystemLoader
-from playwright.async_api import async_playwright
+
+from weasyprint import HTML
 
 import fitz
 import tempfile
