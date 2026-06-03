@@ -2,6 +2,5 @@ fastapi
 uvicorn
 pymupdf
 python-multipart
-weasyprint
-reportlab
 jinja2
+playwright
