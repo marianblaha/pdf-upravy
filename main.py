@@ -299,7 +299,9 @@ async def pdf_text(
     }
 
 @app.post("/generate-report")
-async def generate_report(data: dict):
+async def generate_report(
+    data: dict
+):
 
     env = Environment(
         loader=FileSystemLoader("templates")
