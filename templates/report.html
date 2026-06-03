@@ -114,15 +114,24 @@ body{
 }
 
 .row{
-    display:flex;
-    gap:20px;
+    display:table;
+    width:100%;
+    table-layout:fixed;
     margin-bottom:20px;
-
-    align-items:flex-start;
 }
 
 .col-half{
+    display:table-cell;
     width:50%;
+    vertical-align:top;
+}
+
+.col-half:first-child{
+    padding-right:10px;
+}
+
+.col-half:last-child{
+    padding-left:10px;
 }
 
 /* SECTION */
