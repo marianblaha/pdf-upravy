@@ -206,10 +206,10 @@ def extract_pdf_data(text: str):
 
 @app.post("/parse-html")
 async def parse_html(
-html_file: UploadFile = File(...),
-pdf_file: UploadFile = File(...),
-model: str = Form(""),
-soh: str = Form("")
+    html_file: UploadFile = File(...),
+    pdf_file: UploadFile = File(...),
+    model: str = Form(""),
+    soh: str = Form("")
 ):
 
 # HTML
