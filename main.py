@@ -212,64 +212,64 @@ async def parse_html(
     soh: str = Form("")
 ):
 
-# HTML
+    # HTML
 
-html_bytes = await html_file.read()
+    html_bytes = await html_file.read()
 
-html_text = html_bytes.decode(
-    "utf-8",
-    errors="ignore"
-)
-
-result = extract_html_data(
-    html_text
-)
-
-# PDF
-
-pdf_bytes = await pdf_file.read()
-
-doc = fitz.open(
-    stream=pdf_bytes,
-    filetype="pdf"
-)
-
-pdf_text = ""
-
-for page in doc:
-    pdf_text += page.get_text()
-
-doc.close()
-
-pdf_data = extract_pdf_data(
-    pdf_text
-)
-
-# merge
-
-result.update(pdf_data)
-
-result["model"] = model
-result["soh"] = soh
-
-# report date / time
-
-inspection_date = result.get(
-    "inspection_date",
-    ""
-)
-
-if " " in inspection_date:
-
-    report_date, report_time = inspection_date.split(
-        " ",
-        1
+    html_text = html_bytes.decode(
+        "utf-8",
+        errors="ignore"
     )
+
+    result = extract_html_data(
+        html_text
+    )
+
+    # PDF
+
+    pdf_bytes = await pdf_file.read()
+
+    doc = fitz.open(
+        stream=pdf_bytes,
+        filetype="pdf"
+    )
+
+    pdf_text = ""
+
+    for page in doc:
+        pdf_text += page.get_text()
+
+    doc.close()
+
+    pdf_data = extract_pdf_data(
+        pdf_text
+    )
+
+    # merge
+
+    result.update(pdf_data)
+
+    result["model"] = model
+    result["soh"] = soh
+
+    # report date / time
+
+    inspection_date = result.get(
+        "inspection_date",
+        ""
+    )
+
+    if " " in inspection_date:
+
+        report_date, report_time = inspection_date.split(
+            " ",
+            1
+        )
 
     result["reportDate"] = report_date
     result["reportTime"] = report_time
 
-return JSONResponse(result)
+    return JSONResponse(result)
 
 
 @app.post("/pdf-text")
