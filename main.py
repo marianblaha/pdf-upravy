@@ -132,16 +132,9 @@ def extract_html_data(html: str):
     )
 
     manufacturer = ""
-    model = ""
 
     if manufacturer_raw:
-
-        parts = manufacturer_raw.split("/", 1)
-
-        manufacturer = parts[0].strip()
-
-        if len(parts) > 1:
-            model = parts[1].strip()
+        manufacturer = manufacturer_raw.split("/")[0].strip()
 
     year = find(
         r'Year of manufacture:\s*</b>\s*([^<]+)'
@@ -154,9 +147,33 @@ def extract_html_data(html: str):
     return {
         "vin": vin,
         "manufacturer": manufacturer,
-        "model": model,
         "year": year,
         "inspection_date": inspection_date
+    }
+
+
+def extract_pdf_data(text: str):
+
+    def find(pattern):
+        m = re.search(pattern, text, re.I)
+        return m.group(1).strip() if m else ""
+
+    return {
+        "soc": find(r"SOC:(\d+\.\d+)"),
+        "packVoltage": find(r"Total voltage:(\d+\.\d+)"),
+
+        "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
+        "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
+
+        "maxVoltageCellNo": find(r"Max-voltage cell No\.:(\d+)"),
+        "minVoltageCellNo": find(r"Min-voltage cell No\.:(.+?)\n"),
+
+        "cellDelta": find(r"Voltage difference:(\d+\.\d+)"),
+
+        "maxTemp": find(r"Temperature℃.*?Max:(\d+)"),
+        "minTemp": find(r"Temperature℃.*?Min:(\d+)"),
+
+        "tempDelta": find(r"Temperature difference:(\d+\.\d+)")
     }
 
 
