@@ -147,6 +147,19 @@ body{
     background:#fafafa;
 }
 
+.label-wrap{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.label-wrap img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
 /* SUMMARY */
 
 .summary{
@@ -359,7 +372,12 @@ body{
                 <table class="vehicle-table">
 
                     <tr>
-                        <td>VIN</td>
+                        <td>
+							<div class="label-wrap">
+								<img src="/static/icons/barcode.png">
+								<span>VIN</span>
+							</div>
+						</td>
                         <td>{{ vin }}</td>
                     </tr>
 
