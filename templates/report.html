@@ -63,13 +63,29 @@ body{
 
 .features{
     display:flex;
-    gap:40px;
+    justify-content:space-between;
     margin-top:25px;
-    font-size:15px;
 }
 
-.features div{
+.feature{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:24%;
+}
+
+.feature img{
+    width:48px;
+    height:48px;
+    flex-shrink:0;
+}
+
+.feature span{
     color:white;
+    font-size:13px;
+    line-height:1.25;
+    font-weight:600;
+    text-transform:uppercase;
 }
 
 /* CONTENT */
@@ -281,12 +297,29 @@ body{
                     PROTOKOL STAVU VYSOKONAPÄŤOVEJ BATÉRIE
                 </div>
 
-                <div class="features">
-                    <div>Diagnostika elektromobilov</div>
-                    <div>Čítanie chýb a kódov</div>
-                    <div>Analýza batérie</div>
-                    <div>Kontrola nabíjania</div>
-                </div>
+			<div class="features">
+
+				<div class="feature">
+					<img src="/static/icons/battery-top.svg">
+					<span>Diagnostika elektromobilov</span>
+				</div>
+
+				<div class="feature">
+					<img src="/static/icons/ecu-top.svg">
+					<span>Čítanie chýb a kódov</span>
+				</div>
+
+				<div class="feature">
+					<img src="/static/icons/graph-top.svg">
+					<span>Analýza batérie a systémov</span>
+				</div>
+
+				<div class="feature">
+					<img src="/static/icons/plug-top.svg">
+					<span>Kontrola nabíjania</span>
+				</div>
+
+			</div>
 
             </div>
 
