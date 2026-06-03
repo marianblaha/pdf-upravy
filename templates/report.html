@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    margin: 30px;
+}
+
+.logo{
+    text-align:center;
+}
+
+.logo img{
+    width:250px;
+}
+
+.title{
+    text-align:center;
+    margin-top:20px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:30px;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section-title{
+    background:#16a34a;
+    color:white;
+    padding:8px;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+td{
+    padding:8px;
+    border-bottom:1px solid #ddd;
+}
+
+.soh{
+    text-align:center;
+    font-size:64px;
+    color:#16a34a;
+    font-weight:bold;
+    margin:30px 0;
+}
+
+.footer{
+    margin-top:40px;
+    text-align:center;
+    color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="logo">
+    <img src="file:///app/logo.png">
+</div>
+
+<div class="title">
+EV Battery Health Report
+</div>
+
+<div class="subtitle">
+EV Diagnostika
+</div>
+
+<table>
+<tr><td>VIN</td><td>{{ vin }}</td></tr>
+<tr><td>Výrobca</td><td>{{ manufacturer }}</td></tr>
+<tr><td>Model</td><td>{{ model }}</td></tr>
+<tr><td>Rok výroby</td><td>{{ year }}</td></tr>
+<tr><td>Dátum reportu</td><td>{{ reportDate }}</td></tr>
+<tr><td>Čas reportu</td><td>{{ reportTime }}</td></tr>
+</table>
+
+<div class="soh">
+SOH {{ soh }}%
+</div>
+
+<div class="section">
+<div class="section-title">
+Batéria
+</div>
+
+<table>
+<tr><td>SOC</td><td>{{ soc }} %</td></tr>
+<tr><td>Pack Voltage</td><td>{{ packVoltage }} V</td></tr>
+<tr><td>Current</td><td>{{ totalCurrent }} A</td></tr>
+<tr><td>Cell Delta</td><td>{{ cellDelta }} V</td></tr>
+</table>
+</div>
+
+<div class="section">
+<div class="section-title">
+Články
+</div>
+
+<table>
+<tr><td>Max Cell Voltage</td><td>{{ maxCellVoltage }} V</td></tr>
+<tr><td>Min Cell Voltage</td><td>{{ minCellVoltage }} V</td></tr>
+<tr><td>Max Cell No</td><td>{{ maxVoltageCellNo }}</td></tr>
+<tr><td>Min Cell No</td><td>{{ minVoltageCellNo }}</td></tr>
+<tr><td>Počet článkov</td><td>{{ cellCount }}</td></tr>
+</table>
+</div>
+
+<div class="section">
+<div class="section-title">
+Teploty
+</div>
+
+<table>
+<tr><td>Max Temp</td><td>{{ maxTemp }} °C</td></tr>
+<tr><td>Min Temp</td><td>{{ minTemp }} °C</td></tr>
+<tr><td>Temp Delta</td><td>{{ tempDelta }} °C</td></tr>
+<tr><td>Počet senzorov</td><td>{{ tempSensorCount }}</td></tr>
+</table>
+</div>
+
+<div class="footer">
+EV Diagnostika<br>
++421 903 400 242
+</div>
+
+</body>
+</html>
