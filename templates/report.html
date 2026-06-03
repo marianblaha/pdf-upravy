@@ -282,6 +282,37 @@ body{
     margin-top:10px;
 }
 
+.balance-icon{
+    height:70px;
+    margin-bottom:10px;
+    object-fit:contain;
+}
+
+.balance-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+}
+
+.balance-table td{
+    border:1px solid #ddd;
+    padding:10px;
+}
+
+.balance-table-header{
+    text-align:center;
+    font-weight:bold;
+    background:#fafafa;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:8px;
+}
+
 /* CONCLUSION */
 
 .conclusion{
@@ -622,34 +653,110 @@ body{
                 <div class="section-title">
                     4. BALANS ČLÁNKOV
                 </div>
+				<div class="balance">
 
-                <div class="balance">
+					<div class="balance-card">
 
-                    <div class="balance-card">
-                        <div class="balance-title">MAX NAPÄTIE</div>
-                        <div class="balance-value">
-                            {{ maxCellVoltage }}
-                        </div>
-                    </div>
+						<img
+							src="/static/icons/cellvoltage.png"
+							class="balance-icon"
+						>
 
-                    <div class="balance-card">
-                        <div class="balance-title">MIN NAPÄTIE</div>
-                        <div class="balance-value">
-                            {{ minCellVoltage }}
-                        </div>
-                    </div>
+						<div class="balance-title">
+							MAX NAPÄTIE
+						</div>
 
-                    <div class="balance-card">
-                        <div class="balance-title">ROZDIEL</div>
-                        <div class="balance-value">
-                            {{ cellDelta }}
-                        </div>
-                    </div>
+						<div class="balance-value">
+							{{ maxCellVoltage }} V
+						</div>
 
-                </div>
+					</div>
 
-            </div>
+					<div class="balance-card">
 
+						<img
+							src="/static/icons/cellvoltage.png"
+							class="balance-icon"
+						>
+
+						<div class="balance-title">
+							MIN NAPÄTIE
+						</div>
+
+						<div class="balance-value">
+							{{ minCellVoltage }} V
+						</div>
+
+					</div>
+
+					<div class="balance-card">
+
+						<img
+							src="/static/icons/cellvoltage.png"
+							class="balance-icon"
+						>
+
+						<div class="balance-title">
+							ROZDIEL ČLÁNKOV
+						</div>
+
+						<div class="balance-value">
+							{{ (cellDelta|float * 1000)|round|int }} mV
+						</div>
+
+					</div>
+
+				</div>
+
+				<table class="balance-table">
+
+					<tr>
+						<td colspan="2" class="balance-table-header">
+							ORIENTAČNÉ HODNOTENIE ROZDIELU NAPÄTIA ČLÁNKOV
+						</td>
+					</tr>
+
+					<tr>
+						<td>0 – 10 mV</td>
+						<td>
+							<span class="dot" style="background:#4caf50;"></span>
+							Výborný balans
+						</td>
+					</tr>
+
+					<tr>
+						<td>10 – 20 mV</td>
+						<td>
+							<span class="dot" style="background:#8bc34a;"></span>
+							Veľmi dobrý
+						</td>
+					</tr>
+
+					<tr>
+						<td>20 – 30 mV</td>
+						<td>
+							<span class="dot" style="background:#ffc107;"></span>
+							Normálny
+						</td>
+					</tr>
+
+					<tr>
+						<td>30 – 50 mV</td>
+						<td>
+							<span class="dot" style="background:#ff9800;"></span>
+							Už by som sledoval
+						</td>
+					</tr>
+
+					<tr>
+						<td>&gt; 50 mV</td>
+						<td>
+							<span class="dot" style="background:#f44336;"></span>
+							Odporúčaná kontrola
+						</td>
+					</tr>
+
+				</table>
             <div class="col-half">
 
                 <div class="section-title">
