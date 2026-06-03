@@ -474,13 +474,42 @@ body{
                     </div>
 
                     <div class="summary-card">
-                        <div class="summary-title">SOC</div>
-                        <div class="summary-value">{{ soc }}%</div>
+						<div class="summary-title">
+							SOC
+						</div>
+
+						<img
+							src="/static/icons/soc.png"
+							class="summary-icon"
+						>
+
+						<div class="summary-value">
+							{{ soc }}%
+						</div>
+
+						<div class="summary-label">
+							STAV NABITIA
+						</div>
                     </div>
 
                     <div class="summary-card">
-                        <div class="summary-title">NAPÄTIE</div>
-                        <div class="summary-value">{{ packVoltage }}</div>
+						<div class="summary-title">
+							NAPÄTIE BATÉRIE
+						</div>
+
+						<img
+							src="/static/icons/voltage.png"
+							class="summary-icon"
+						>
+
+						<div class="summary-value">
+							{{ packVoltage }}
+							<span class="summary-unit">V</span>
+						</div>
+
+						<div class="summary-label">
+							CELKOVÉ NAPÄTIE
+						</div>
                     </div>
 
                 </div>
