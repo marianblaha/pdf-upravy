@@ -325,86 +325,34 @@ async def generate_report(data: dict):
 
 @app.get("/preview")
 async def preview():
-    return HTMLResponse(
-        open("templates/report.html", encoding="utf-8").read()
+
+    env = Environment(
+        loader=FileSystemLoader("templates")
     )
-    
-@app.get("/test-playwright")
-async def test_playwright():
-    async with async_playwright() as p:
 
-        browser = await p.chromium.launch(
-            headless=True,
-            args=[
-                "--no-sandbox",
-                "--disable-setuid-sandbox"
-            ]
-        )
+    template = env.get_template(
+        "report.html"
+    )
 
-        page = await browser.new_page()
-
-        await page.set_content(
-            "<h1>Hello Playwright</h1>"
-        )
-
-        title = await page.text_content("h1")
-
-        await browser.close()
-
-        return {
-            "title": title
-        }
-
-@app.get("/playwright-path")
-async def playwright_path():
-
-    import os
-
-    return {
-        "cache_exists": os.path.exists("/root/.cache/ms-playwright"),
-        "cache_dir_exists": os.path.exists("/root/.cache"),
-        "cache_contents": os.listdir("/root/.cache") if os.path.exists("/root/.cache") else []
-    }        
-
-@app.get("/debug-chromium")
-async def debug_chromium():
-
-    import subprocess
-
-    try:
-        chromium = subprocess.check_output(
-            ["which", "chromium"],
-            text=True
-        ).strip()
-    except Exception:
-        chromium = "not found"
-
-    return {
-        "chromium": chromium
+    sample_data = {
+        "vin": "TMBJC7NY9PF******",
+        "manufacturer": "Skoda",
+        "year": "2023",
+        "model": "enyaq 80",
+        "soh": "92",
+        "soc": "49.9",
+        "packVoltage": "354.1",
+        "maxCellVoltage": "3.692",
+        "minCellVoltage": "3.685",
+        "cellDelta": "0.007",
+        "maxTemp": "25",
+        "minTemp": "24",
+        "tempDelta": "1.0",
+        "reportDate": "2026-06-01",
+        "reportTime": "21:25:47"
     }
 
-@app.get("/debug-browsers")
-async def debug_browsers():
+    return HTMLResponse(
+        template.render(**sample_data)
+    )
 
-    import subprocess
-
-    result = {}
-
-    for cmd in [
-        "chromium",
-        "chromium-browser",
-        "google-chrome",
-        "google-chrome-stable"
-    ]:
-        try:
-            path = subprocess.check_output(
-                ["which", cmd],
-                text=True
-            ).strip()
-
-            result[cmd] = path
-
-        except:
-            result[cmd] = "not found"
-
-    return result
