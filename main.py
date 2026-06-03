@@ -365,3 +365,20 @@ async def playwright_path():
         "cache_dir_exists": os.path.exists("/root/.cache"),
         "cache_contents": os.listdir("/root/.cache") if os.path.exists("/root/.cache") else []
     }        
+
+@app.get("/debug-chromium")
+async def debug_chromium():
+
+    import subprocess
+
+    try:
+        chromium = subprocess.check_output(
+            ["which", "chromium"],
+            text=True
+        ).strip()
+    except Exception:
+        chromium = "not found"
+
+    return {
+        "chromium": chromium
+    }
