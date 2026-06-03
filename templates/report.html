@@ -217,10 +217,11 @@ body{
 }
 
 .soh-big{
-    font-size:48px;
+    font-size:26px;
     color:#2e7d32;
     font-weight:bold;
-    margin-top:20px;
+    margin-top:15px;
+    line-height:1.2;
 }
 
 .soh-levels{
@@ -597,7 +598,7 @@ body{
                         Zvýšené opotrebenie
                     </div>
 
-                    <div class="level active">
+					<div class="level {% if soh|int < 80 %}active{% endif %}">
                         <strong><80%</strong>
                         Odporúčaná kontrola
                     </div>
