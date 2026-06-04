@@ -893,19 +893,31 @@ body{
 				</div>
 
                 <div class="soh-note">
-                    Hodnota SOH vyjadruje aktuálny stav zdravia trakčnej batérie.
-					{% if soh|int >= 95 %}
-						Batéria vykazuje minimálnu degradáciu a zodpovedá stavu takmer nového vozidla.
-					{% elif soh|int >= 90 %}
-						Batéria vykazuje nízku mieru degradácie vzhľadom na vek a počet najazdených kilometrov.
-					{% elif soh|int >= 85 %}
-						Batéria je v dobrom technickom stave s bežným opotrebením zodpovedajúcim prevádzke vozidla.
-					{% elif soh|int >= 80 %}
-						Batéria vykazuje zvýšené opotrebenie, odporúča sa pravidelné sledovanie jej stavu.
-					{% else %}
-						Batéria vykazuje výraznejšiu degradáciu a odporúča sa podrobnejšia diagnostika.
-					{% endif %}
-					
+
+					<div>
+						<strong>Hodnota SOH vyjadruje aktuálny stav zdravia trakčnej batérie.</strong>
+					</div>
+
+					<div style="margin-top:8px;">
+						Na hodnotu SOH vplýva vek batérie, počet nabíjacích cyklov, spôsob používania vozidla, frekvencia rýchlonabíjania a prevádzka pri extrémnych teplotách.
+					</div>
+
+					<div style="margin-top:8px;">
+
+						{% if soh|int >= 95 %}
+							Batéria vykazuje minimálnu degradáciu a zodpovedá stavu takmer nového vozidla.
+						{% elif soh|int >= 90 %}
+							Batéria vykazuje nízku mieru degradácie vzhľadom na vek a počet najazdených kilometrov.
+						{% elif soh|int >= 85 %}
+							Batéria je v dobrom technickom stave s bežným opotrebením zodpovedajúcim prevádzke vozidla.
+						{% elif soh|int >= 80 %}
+							Batéria vykazuje zvýšené opotrebenie, odporúča sa pravidelné sledovanie jej stavu.
+						{% else %}
+							Batéria vykazuje výraznejšiu degradáciu a odporúča sa podrobnejšia diagnostika.
+						{% endif %}
+
+					</div>					
+
                 </div>
 
             </div>
