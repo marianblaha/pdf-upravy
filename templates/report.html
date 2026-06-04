@@ -387,34 +387,25 @@ body{
 
     margin-top:12px;
 
-    border-bottom-left-radius:10px;
-    border-bottom-right-radius:10px;
+    border:1px solid #ddd;
+    border-radius:10px;
 
     overflow:hidden;
 }
 
 .balance-table td{
-    border:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
     padding:5px 8px;
     font-size:12px;
 }
 
-/* vonkajšie rohy */
-.balance-table tr:last-child td:first-child{
-    border-bottom-left-radius:10px;
+.balance-table tr:last-child td{
+    border-bottom:none;
 }
 
-.balance-table tr:last-child td:last-child{
-    border-bottom-right-radius:10px;
-}
-
-/* vnútorné rohy medzi stĺpcami */
-.balance-table tr:last-child td:first-child{
-    overflow:hidden;
-}
-
-.balance-table tr:last-child td:last-child{
-    overflow:hidden;
+.balance-table td:last-child{
+    border-right:none;
 }
 
 .balance-table-header{
