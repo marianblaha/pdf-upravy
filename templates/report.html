@@ -682,9 +682,20 @@ body{
 						</div>
 
 						<div class="summary-label">
-							STAV BATÉRIE
-						</div>
-					</div>
+
+							{% if soh|int >= 95 %}
+								VÝBORNÝ STAV
+							{% elif soh|int >= 90 %}
+								VEĽMI DOBRÝ STAV
+							{% elif soh|int >= 85 %}
+								DOBRÝ STAV
+							{% elif soh|int >= 80 %}
+								ZVÝŠENÉ OPOTREBENIE
+							{% else %}
+								ODPORÚČANÁ KONTROLA
+							{% endif %}
+
+						</div>					</div>
 
 					<div class="summary-card">
 						<div class="summary-title">
