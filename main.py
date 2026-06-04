@@ -411,7 +411,7 @@ async def test_playwright():
         return {"title": title}
 
 @app.post("/generate-report-pdf-playwright")
-async def generate_report_pdf_playwright():
+async def generate_report_pdf_playwright(data: dict):
 
     async with async_playwright() as p:
 
@@ -426,8 +426,19 @@ async def generate_report_pdf_playwright():
 
         page = await browser.new_page()
 
+        env = Environment(
+            loader=FileSystemLoader("templates")
+        )
+
+        template = env.get_template(
+            "report.html"
+        )
+
+        html = template.render(**data)
+
         await page.set_content(
-            "<h1>PDF TEST</h1>"
+            html,
+            wait_until="networkidle"
         )
 
         pdf_bytes = await page.pdf(
