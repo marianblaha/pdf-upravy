@@ -173,7 +173,7 @@ def extract_pdf_data(text: str):
     return {
 
         # hlavný blok
-        "soc": str(round(float(find(r"SOC:(\d+\.\d+)")), 1)),
+        "soc": str(round(float(find(r"SOC:(\d+\.\d+)")), 0)),
         "packVoltage": find(r"Total voltage:(\d+\.\d+)"),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
 
