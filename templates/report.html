@@ -746,34 +746,46 @@ body{
 
 					<div class="balance-card">
 
-						<img
-							src="{{ base_url }}/static/icons/cellvoltage.png"
-							class="balance-icon"
-						>
+						<div class="balance-row">
 
-						<div class="balance-title">
-							MIN NAPÄTIE
-						</div>
+							<img
+								src="{{ base_url }}/static/icons/cellvoltage.png"
+								class="balance-icon"
+							>
 
-						<div class="balance-value">
-							{{ minCellVoltage }} V
+							<div>
+								<div class="balance-title">
+									MIN NAPÄTIE
+								</div>
+
+								<div class="balance-value">
+									{{ minCellVoltage }} V
+								</div>
+							</div>
+
 						</div>
 
 					</div>
 
 					<div class="balance-card">
 
-						<img
-							src="{{ base_url }}/static/icons/cellvoltage.png"
-							class="balance-icon"
-						>
+						<div class="balance-row">
 
-						<div class="balance-title">
-							ROZDIEL ČLÁNKOV
-						</div>
+							<img
+								src="{{ base_url }}/static/icons/cellvoltage.png"
+								class="balance-icon"
+							>
 
-						<div class="balance-value">
-							{{ (cellDelta|float * 1000)|round|int }} mV
+							<div>
+								<div class="balance-title">
+									ROZDIEL ČLÁNKOV
+								</div>
+
+								<div class="balance-value">
+									{{ (cellDelta|float * 1000)|round|int }} mV
+								</div>
+							</div>
+
 						</div>
 
 					</div>
