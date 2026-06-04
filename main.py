@@ -162,6 +162,10 @@ def extract_html_data(html: str):
 
 def extract_pdf_data(text: str):
 
+    print("=== PDF TEXT ===")
+    print(text)
+    print("===============")
+
     def find(pattern):
         m = re.search(
             pattern,
@@ -172,11 +176,12 @@ def extract_pdf_data(text: str):
 
     return {
 
+        
         # hlavný blok
         "soc": str(int(float(find(r"SOC:(\d+\.\d+)")))),
         "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
-        "odometer": find(r"Odometer：(\d+)"),
+        "odometer": find(r"Odometer.*?(\d+)"),
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
         "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
