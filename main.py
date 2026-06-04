@@ -451,7 +451,14 @@ async def generate_report_pdf_playwright(
 
         base_url = str(request.base_url).rstrip("/")
         
+        report_id = (
+            f"EVD-"
+            f"{data['manufacturer'][:2].upper()}-"
+            f"{data['reportDate'].replace('-', '')}-"
+            f"{data['vin'][-4:]}"
+        
         qr_payload = {
+            "reportId": report_id,
             "vin": data["vin"],
             "soh": data["soh"],
             "soc": data["soc"],
