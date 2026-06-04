@@ -12,6 +12,12 @@ import tempfile
 import os
 import re
 
+import qrcode
+import json
+import base64
+
+from io import BytesIO
+
 app = FastAPI(
     title="PDF SOH Updater",
     version="1.0.0"
