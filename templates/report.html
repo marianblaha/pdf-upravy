@@ -322,8 +322,13 @@ body{
 .soh-levels{
     flex:1;
 
+    border:1px solid #ddd;
+    border-top:none;
+
     border-bottom-right-radius:10px;
+
     overflow:hidden;
+	border:1px solid red;
 }
 
 .level-grid{
@@ -335,7 +340,11 @@ body{
 
 .level{
     flex:1;
-    border:1px solid #ddd;
+    border-top:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    border-left:none;
+
     text-align:center;
     padding:10px;
 }
@@ -343,6 +352,10 @@ body{
 .level.active{
     background:#2e7d32;
     color:white;
+}
+
+.level:last-child{
+    border-right:none;
 }
 
 .soh-note{
