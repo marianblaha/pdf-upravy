@@ -608,147 +608,83 @@ body{
 
 			</div>
 
-<!--             <div class="col-half">
+			<div class="col-half">
 
-                <div class="section-title">
-                    1. IDENTIFIKÁCIA VOZIDLA
-                </div>
+				<div class="section">
 
-                <table class="vehicle-table">
+					<div class="section-title">
+						2. SÚHRN STAVU BATÉRIE
+					</div>
 
-                    <tr>
-                        <td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/barcode.png">
-								<span>VIN</span>
+					<div class="section-body">
+
+						<div class="summary">
+
+							<div class="summary-card">
+								<div class="summary-title">
+									SOH
+								</div>
+
+								<img
+									src="{{ base_url }}/static/icons/soh.png"
+									class="summary-icon"
+								>
+
+								<div class="summary-value">
+									{{ soh }}%
+								</div>
+
+								<div class="summary-label">
+									STAV BATÉRIE
+								</div>
 							</div>
-						</td>
-                        <td>{{ vin }}</td>
-                    </tr>
 
-                    <tr>
-						<td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/car.png">
-								<span>Značka / Model</span>
+							<div class="summary-card">
+								<div class="summary-title">
+									SOC
+								</div>
+
+								<img
+									src="{{ base_url }}/static/icons/soc.png"
+									class="summary-icon"
+								>
+
+								<div class="summary-value">
+									{{ soc }}%
+								</div>
+
+								<div class="summary-label">
+									STAV NABITIA
+								</div>
 							</div>
-						</td>
-                        <td>{{ manufacturer }} {{ model }}</td>
-                    </tr>
 
-                    <tr>
-						<td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/calendar.png">
-								<span>Rok výroby</span>
+							<div class="summary-card">
+								<div class="summary-title">
+									BATÉRIA
+								</div>
+
+								<img
+									src="{{ base_url }}/static/icons/voltage.png"
+									class="summary-icon"
+								>
+
+								<div class="summary-value">
+									{{ packVoltage }}
+									<span class="summary-unit">V</span>
+								</div>
+
+								<div class="summary-label">
+									CELKOVÉ NAPÄTIE
+								</div>
 							</div>
-						</td>
-                        <td>{{ year }}</td>
-                    </tr>
 
-                    <tr>
-						<td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/speedmeter.png">
-								<span>Stav kilometrov</span>
-							</div>
-						</td>
-                        <td>N/A</td>
-                    </tr>
-
-                    <tr>
-						<td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/location.png">
-								<span>Miesto merania</span>
-							</div>
-						</td>
-                        <td>EV Diagnostika</td>
-                    </tr>
-
-                    <tr>
-						<td>
-							<div class="label-wrap">
-								<img src="{{ base_url }}/static/icons/clock.png">
-								<span>Dátum a čas</span>
-							</div>
-						</td>
-                        <td>{{ reportDate }} {{ reportTime }}</td>
-                    </tr>
-
-                </table>
-
-            </div> -->
-
-            <div class="col-half">
-
-                <div class="section-title">
-                    2. SÚHRN STAVU BATÉRIE
-                </div>
-
-                <div class="summary">
-
-                    <div class="summary-card">
-						<div class="summary-title">
-							SOH
 						</div>
 
-						<img
-							src="{{ base_url }}/static/icons/soh.png"
-							class="summary-icon"
-						>
+					</div>
 
-						<div class="summary-value">
-							{{ soh }}%
-						</div>
+				</div>
 
-						<div class="summary-label">
-							STAV BATÉRIE
-						</div>
-                    </div>
-
-                    <div class="summary-card">
-						<div class="summary-title">
-							SOC
-						</div>
-
-						<img
-							src="{{ base_url }}/static/icons/soc.png"
-							class="summary-icon"
-						>
-
-						<div class="summary-value">
-							{{ soc }}%
-						</div>
-
-						<div class="summary-label">
-							STAV NABITIA
-						</div>
-                    </div>
-
-                    <div class="summary-card">
-						<div class="summary-title">
-							BATÉRIA
-						</div>
-
-						<img
-							src="{{ base_url }}/static/icons/voltage.png"
-							class="summary-icon"
-						>
-
-						<div class="summary-value">
-							{{ packVoltage }}
-							<span class="summary-unit">V</span>
-						</div>
-
-						<div class="summary-label">
-							CELKOVÉ NAPÄTIE
-						</div>
-                    </div>
-
-                </div>
-
-            </div>
+			</div>
 
         </div>
 
