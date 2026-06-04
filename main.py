@@ -462,17 +462,13 @@ async def generate_report_pdf_playwright(
         data["report_id"] = report_id
         
         qr_payload = f"""
-        EV Diagnostika
-
         Report ID: {report_id}
         VIN: {data['vin']}
         Dátum: {data['reportDate']}
-
         SOH: {data['soh']} %
         SOC: {data['soc']} %
         Najazdené km: {data.get('odometer', '')}
-
-        Výsledok diagnostiky trakčnej batérie
+        Výsledok EV diagnostiky trakčnej batérie.
         """
         
         qr = qrcode.make(qr_payload)
