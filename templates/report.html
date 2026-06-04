@@ -852,51 +852,64 @@ body{
 
 					<div class="balance-card">
 
-						<img
-							src="{{ base_url }}/static/icons/teplomer.png"
-							class="balance-icon"
-						>
+						<div class="balance-row">
+							<img
+								src="{{ base_url }}/static/icons/teplomer.png"
+								class="balance-icon"
+							>
+							<div>
+								<div class="balance-title">
+									MAX TEPLOTA
+								</div>
 
-						<div class="balance-title">
-							MAX TEPLOTA
-						</div>
+								<div class="balance-value">
+									{{ maxTemp }} °C
+								</div>
+							</div>
 
-						<div class="balance-value">
-							{{ maxTemp }} °C
-						</div>
-
-					</div>
-
-					<div class="balance-card">
-
-						<img
-							src="{{ base_url }}/static/icons/teplomer.png"
-							class="balance-icon"
-						>
-
-						<div class="balance-title">
-							MIN TEPLOTA
-						</div>
-
-						<div class="balance-value">
-							{{ minTemp }} °C
 						</div>
 
 					</div>
 
 					<div class="balance-card">
 
-						<img
-							src="{{ base_url }}/static/icons/teplomer.png"
-							class="balance-icon"
-						>
+						<div class="balance-row">
+							<img
+								src="{{ base_url }}/static/icons/teplomer.png"
+								class="balance-icon"
+							>
+							<div>
+								<div class="balance-title">
+									MIN TEPLOTA
+								</div>
 
-						<div class="balance-title">
-							ROZDIEL TEPLOT
+								<div class="balance-value">
+									{{ minTemp }} °C
+								</div>
+							</div>
+
 						</div>
 
-						<div class="balance-value">
-							{{ tempDelta }} °C
+
+					</div>
+
+					<div class="balance-card">
+
+						<div class="balance-row">
+							<img
+								src="{{ base_url }}/static/icons/teplomer.png"
+								class="balance-icon"
+							>
+							<div>
+								<div class="balance-title">
+									ROZDIEL TEPLOT
+								</div>
+
+								<div class="balance-value">
+									{{ tempDelta }} °C
+								</div>
+							</div>
+
 						</div>
 
 					</div>
