@@ -929,25 +929,25 @@ body{
 					<div class="soh-text">
 
 						<div>
-							Hodnota SOH vyjadruje aktuálny stav zdravia trakčnej batérie.
+							SOH (State of Health) vyjadruje aktuálny stav trakčnej batérie v porovnaní s jej pôvodnou kapacitou.
 						</div>
 
 						<div style="margin-top:8px;">
-							Na hodnotu SOH vplýva vek batérie, počet nabíjacích cyklov, spôsob používania vozidla, frekvencia rýchlonabíjania a prevádzka pri extrémnych teplotách.
+							Výsledná hodnota je ovplyvnená vekom batérie, počtom nabíjacích cyklov a spôsobom používania vozidla.
 						</div>
 
 						<div style="margin-top:8px;">
 							<strong>
 								{% if soh|int >= 95 %}
-									Batéria vykazuje minimálnu degradáciu a zodpovedá stavu takmer nového vozidla.
+								Na základe nameraných údajov je stav trakčnej batérie hodnotený ako výborný.
 								{% elif soh|int >= 90 %}
-									Batéria vykazuje nízku mieru degradácie vzhľadom na vek a počet najazdených kilometrov.
+								Na základe nameraných údajov je stav trakčnej batérie hodnotený ako veľmi dobrý.
 								{% elif soh|int >= 85 %}
-									Batéria je v dobrom technickom stave s bežným opotrebením zodpovedajúcim prevádzke vozidla.
+								Na základe nameraných údajov je stav trakčnej batérie hodnotený ako dobrý.
 								{% elif soh|int >= 80 %}
-									Batéria vykazuje zvýšené opotrebenie, odporúča sa pravidelné sledovanie jej stavu.
+								Na základe nameraných údajov je evidované zvýšené opotrebenie trakčnej batérie.
 								{% else %}
-									Batéria vykazuje výraznejšiu degradáciu a odporúča sa podrobnejšia diagnostika.
+								Na základe nameraných údajov odporúčame vykonať podrobnejšiu kontrolu stavu trakčnej batérie.
 								{% endif %}
 							</strong>
 						</div>
