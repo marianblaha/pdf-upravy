@@ -444,6 +444,27 @@ async def generate_report_pdf_playwright(
         )
 
         base_url = str(request.base_url).rstrip("/")
+        
+        qr_payload = {
+            "vin": data["vin"],
+            "soh": data["soh"],
+            "soc": data["soc"],
+            "odometer": data.get("odometer", ""),
+            "date": data["reportDate"]
+        }
+
+        qr = qrcode.make(json.dumps(qr_payload))
+
+        buffer = BytesIO()
+        qr.save(buffer, format="PNG")
+
+        qr_base64 = base64.b64encode(
+            buffer.getvalue()
+        ).decode()
+
+        data["qr_code"] = (
+            f"data:image/png;base64,{qr_base64}"
+        )        
 
         html = template.render(
             **data,
