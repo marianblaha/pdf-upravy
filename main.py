@@ -162,9 +162,9 @@ def extract_html_data(html: str):
 
 def extract_pdf_data(text: str):
 
-    print("===- PDF TEXT -===")
-    print(text)
-    print("===============")
+    # print("===- PDF TEXT -===")
+    # print(text)
+    # print("===============")
 
     def find(pattern):
         m = re.search(
@@ -259,7 +259,7 @@ async def parse_html(
 
     doc.close()
 
-    pdf_data = extract_pdf_data(
+    pdf_data = extract_pdf_da+ta(
         pdf_text
     )
 
