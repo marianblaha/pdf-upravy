@@ -121,16 +121,16 @@ body{
 }
 
 .row{
-    display:table;
+    display:flex;
     width:100%;
-    table-layout:fixed;
     margin-bottom:10px;
+    align-items:stretch;
 }
 
 .col-half{
-    display:table-cell;
     width:50%;
-    vertical-align:top;
+    display:flex;
+    flex-direction:column;
 }
 
 .col-half:first-child{
@@ -212,6 +212,7 @@ body{
 
 .summary{
     display:flex;
+    flex:1;
 
     border-left:1px solid #dcdcdc;
     border-right:1px solid #dcdcdc;
@@ -226,11 +227,19 @@ body{
 .summary-card{
     flex:1;
 
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
     text-align:center;
 
     padding:5px;
 
     border-right:2px solid #d0d0d0;
+}
+
+.summary-card:last-child{
+    border-right:none;
 }
 
 .summary-card:last-child{
