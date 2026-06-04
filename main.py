@@ -174,7 +174,7 @@ def extract_pdf_data(text: str):
 
         # hlavný blok
         "soc": str(round(float(find(r"SOC:(\d+\.\d+)")), 0)),
-        "packVoltage": find_float(r"Total voltage:(\d+\.\d+)", 1),
+        "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
