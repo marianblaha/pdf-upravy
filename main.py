@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 from pathlib import Path
+from playwright.async_api import async_playwright
 
 import fitz
 import tempfile
@@ -385,3 +386,26 @@ async def generate_report_pdf(data: dict):
             "attachment; filename=report.pdf"
         }
     )
+
+@app.get("/test-playwright")
+async def test_playwright():
+
+    async with async_playwright() as p:
+
+        browser = await p.chromium.launch(
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox"
+            ]
+        )
+
+        page = await browser.new_page()
+
+        await page.set_content("<h1>Playwright OK</h1>")
+
+        title = await page.text_content("h1")
+
+        await browser.close()
+
+        return {"title": title}

@@ -4,3 +4,4 @@ pymupdf
 python-multipart
 jinja2
 weasyprint
+playwright
