@@ -176,6 +176,7 @@ def extract_pdf_data(text: str):
         "soc": str(int(float(find(r"SOC:(\d+\.\d+)")))),
         "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
+        "odometer": find(r"Odometer：(\d+)"),
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
         "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
