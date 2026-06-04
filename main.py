@@ -456,6 +456,7 @@ async def generate_report_pdf_playwright(
             f"{data['manufacturer'][:2].upper()}-"
             f"{data['reportDate'].replace('-', '')}-"
             f"{data['vin'][-4:]}"
+        )
         
         qr_payload = {
             "reportId": report_id,
