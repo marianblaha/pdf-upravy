@@ -430,10 +430,17 @@ async def generate_report_pdf_playwright():
             "<h1>PDF TEST</h1>"
         )
 
-        title = await page.text_content("h1")
+        pdf_bytes = await page.pdf(
+            format="A4",
+            print_background=True
+        )
 
         await browser.close()
 
-        return {
-            "title": title
-        }
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": "attachment; filename=test.pdf"
+            }
+        )
