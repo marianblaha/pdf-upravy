@@ -451,7 +451,8 @@ async def generate_report_pdf_playwright(
 
         pdf_bytes = await page.pdf(
             format="A4",
-            print_background=True
+            print_background=True,
+            scale=0.90
         )
 
         await browser.close()
