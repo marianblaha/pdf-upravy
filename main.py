@@ -458,6 +458,8 @@ async def generate_report_pdf_playwright(
             f"{data['vin'][-4:]}"
         )
         
+        data["report_id"] = report_id
+        
         qr_payload = {
             "reportId": report_id,
             "vin": data["vin"],
