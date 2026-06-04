@@ -412,4 +412,28 @@ async def test_playwright():
 
 @app.post("/generate-report-pdf-playwright")
 async def generate_report_pdf_playwright():
-    return {"status": "ok"}
+
+    async with async_playwright() as p:
+
+        browser = await p.chromium.launch(
+            headless=True,
+            executable_path="/usr/bin/chromium",
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox"
+            ]
+        )
+
+        page = await browser.new_page()
+
+        await page.set_content(
+            "<h1>PDF TEST</h1>"
+        )
+
+        title = await page.text_content("h1")
+
+        await browser.close()
+
+        return {
+            "title": title
+        }
