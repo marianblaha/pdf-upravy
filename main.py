@@ -409,3 +409,7 @@ async def test_playwright():
         await browser.close()
 
         return {"title": title}
+
+@app.post("/generate-report-pdf-playwright")
+async def generate_report_pdf_playwright():
+    return {"status": "ok"}
