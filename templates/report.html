@@ -372,7 +372,7 @@ body{
 
 .balance{
     display:flex;
-    gap:10px;
+    gap:0px;
 }
 
 .balance-card{
@@ -380,7 +380,17 @@ body{
     border:1px solid #ddd;
     text-align:center;
     padding:6px;
-	border-radius:8px;
+	border-radius:0px;
+}
+
+.balance-card:first-child{
+    border-top-left-radius:10px;
+    border-bottom-left-radius:10px;
+}
+
+.balance-card:last-child{
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
 }
 
 .balance-table{
