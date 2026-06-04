@@ -456,7 +456,7 @@ async def generate_report_pdf_playwright(
         report_id = (
             f"EVD-"
             f"{data['manufacturer'].strip()[:2].upper()}-"
-            f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+            f"{datetime.now().strftime('%Y%m%d-%H%M')}"
         )
         
         data["report_id"] = report_id
