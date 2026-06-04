@@ -396,15 +396,25 @@ body{
 .balance-table td{
     border:1px solid #ddd;
     padding:5px 8px;
-	font-size:12px;
+    font-size:12px;
 }
 
+/* vonkajšie rohy */
 .balance-table tr:last-child td:first-child{
     border-bottom-left-radius:10px;
 }
 
 .balance-table tr:last-child td:last-child{
     border-bottom-right-radius:10px;
+}
+
+/* vnútorné rohy medzi stĺpcami */
+.balance-table tr:last-child td:first-child{
+    overflow:hidden;
+}
+
+.balance-table tr:last-child td:last-child{
+    overflow:hidden;
 }
 
 .balance-table-header{
