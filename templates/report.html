@@ -275,6 +275,30 @@ body{
 
 /* BALANCE */
 
+
+.balance-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.balance-icon{
+    width:28px;
+    height:28px;
+}
+
+.balance-title{
+    font-size:11px;
+    font-weight:bold;
+}
+
+.balance-value{
+    font-size:22px;
+    font-weight:bold;
+    color:#2e7d32;
+}
+
 .balance{
     display:flex;
     gap:10px;
@@ -285,26 +309,6 @@ body{
     border:1px solid #ddd;
     text-align:center;
     padding:6px;
-}
-
-.balance-title{
-    font-size:11px;
-    font-weight:bold;
-	line-height:1.1;
-}
-
-.balance-value{
-    font-size:22px;
-    color:#2e7d32;
-    font-weight:bold;
-    margin-top:10px;
-	line-height:1.1;
-}
-
-.balance-icon{
-    height:32px;
-    margin-bottom:4px;
-    object-fit:contain;
 }
 
 .balance-table{
@@ -719,17 +723,23 @@ body{
 
 					<div class="balance-card">
 
-						<img
-							src="{{ base_url }}/static/icons/cellvoltage.png"
-							class="balance-icon"
-						>
+						<div class="balance-row">
 
-						<div class="balance-title">
-							MAX NAPÄTIE
-						</div>
+							<img
+								src="{{ base_url }}/static/icons/cellvoltage.png"
+								class="balance-icon"
+							>
 
-						<div class="balance-value">
-							{{ maxCellVoltage }} V
+							<div>
+								<div class="balance-title">
+									MAX NAPÄTIE
+								</div>
+
+								<div class="balance-value">
+									{{ maxCellVoltage }} V
+								</div>
+							</div>
+
 						</div>
 
 					</div>
