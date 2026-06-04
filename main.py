@@ -7,6 +7,8 @@ from weasyprint import HTML
 from pathlib import Path
 from playwright.async_api import async_playwright
 
+from datetime import datetime
+
 import fitz
 import tempfile
 import os
@@ -453,9 +455,8 @@ async def generate_report_pdf_playwright(
         
         report_id = (
             f"EVD-"
-            f"{data['manufacturer'][:2].upper()}-"
-            f"{data['reportDate'].replace('-', '')}-"
-            f"{data['vin'][-4:]}"
+            f"{data['manufacturer'].strip()[:2].upper()}-"
+            f"{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         )
         
         data["report_id"] = report_id
