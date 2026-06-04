@@ -411,7 +411,10 @@ async def test_playwright():
         return {"title": title}
 
 @app.post("/generate-report-pdf-playwright")
-async def generate_report_pdf_playwright(data: dict):
+async def generate_report_pdf_playwright(
+    request: Request,
+    data: dict
+):
 
     async with async_playwright() as p:
 
@@ -434,7 +437,12 @@ async def generate_report_pdf_playwright(data: dict):
             "report.html"
         )
 
-        html = template.render(**data)
+        base_url = str(request.base_url).rstrip("/")
+
+        html = template.render(
+            **data,
+            base_url=base_url
+        )
 
         await page.set_content(
             html,
