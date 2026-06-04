@@ -371,6 +371,29 @@ body{
 	border-bottom-right-radius:10px;
 }
 
+.report-verification{
+    margin-top:12px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    border-top:1px solid #dcdcdc;
+    padding-top:10px;
+}
+
+.qr-code{
+    width:70px;
+    height:70px;
+    flex-shrink:0;
+}
+
+.report-id{
+    font-size:11px;
+    color:#666;
+    font-weight:600;
+}
+
 /* BALANCE */
 
 
@@ -917,6 +940,18 @@ body{
 								Batéria vykazuje výraznejšiu degradáciu a odporúča sa podrobnejšia diagnostika.
 							{% endif %}
 						</strong>
+					</div>
+					<div class="report-verification">
+
+						<img
+							src="{{ qr_code }}"
+							class="qr-code"
+						>
+
+						<div class="report-id">
+							{{ report_id }}
+						</div>
+
 					</div>					
 
                 </div>
