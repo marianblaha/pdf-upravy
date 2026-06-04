@@ -259,7 +259,7 @@ async def parse_html(
 
     doc.close()
 
-    pdf_data = extract_pdf_da+ta(
+    pdf_data = extract_pdf_data(
         pdf_text
     )
 
