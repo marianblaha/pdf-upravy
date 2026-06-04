@@ -457,10 +457,12 @@ async def generate_report_pdf_playwright(
 
         await browser.close()
 
+        filename = f"EV_Diagnostika_{data['vin']}_{data['reportDate']}.pdf"
+
         return Response(
             content=pdf_bytes,
             media_type="application/pdf",
             headers={
-                "Content-Disposition": "attachment; filename=test.pdf"
+                "Content-Disposition": f'attachment; filename="{filename}"'
             }
         )
