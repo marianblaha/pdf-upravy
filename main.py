@@ -162,7 +162,7 @@ def extract_html_data(html: str):
 
 def extract_pdf_data(text: str):
 
-    print("=== PDF TEXT ===")
+    print("===- PDF TEXT -===")
     print(text)
     print("===============")
 
