@@ -160,12 +160,22 @@ def extract_html_data(html: str):
     inspection_date = find(
         r'Time and date of inspection.*?</b>\s*([^<]+)'
     )
+    
+    gps = re.search(
+        r'google\.maps\.LatLng\(([\d\.]+),([\d\.]+)\)',
+        html
+    )
+
+    latitude = gps.group(1) if gps else ""
+    longitude = gps.group(2) if gps else ""    
 
     return {
         "vin": vin,
         "manufacturer": manufacturer,
         "year": year,
-        "inspection_date": inspection_date
+        "inspection_date": inspection_date,
+        "latitude": latitude,
+        "longitude": longitude        
     }
 
 
