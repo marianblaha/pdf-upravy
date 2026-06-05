@@ -197,10 +197,10 @@ def extract_pdf_data(text: str):
 
         
         # hlavný blok
-        "soc": str(int(float(find(r"SOC:(\d+\.\d+)") or 0))),
+        # "soc": str(int(float(find(r"SOC:(\d+\.\d+)") or 0))), idem to tahat nakoniec z mailu
         "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
-        "odometer": find(r"Odometer.*?(\d+)"),
+        #"odometer": find(r"Odometer.*?(\d+)"), idem to tahat nakoniec z mailu
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
         "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
@@ -246,7 +246,9 @@ async def parse_html(
     html_file: UploadFile = File(...),
     pdf_file: UploadFile = File(...),
     model: str = Form(""),
-    soh: str = Form("")
+    soh: str = Form(""),
+    soc: str = Form(""),
+    odometer: str = Form("")
 ):
 
     # HTML
@@ -286,8 +288,17 @@ async def parse_html(
 
     result.update(pdf_data)
 
-    result["model"] = model
-    result["soh"] = soh
+    if model:
+        result["model"] = model
+
+    if soh:
+        result["soh"] = soh
+
+    if soc:
+        result["soc"] = soc
+
+    if odometer:
+        result["odometer"] = odometer
 
     # report date / time
 
@@ -296,12 +307,11 @@ async def parse_html(
         ""
     )
 
-    if " " in inspection_date:
+    report_date = ""
+    report_time = ""
 
-        report_date, report_time = inspection_date.split(
-            " ",
-            1
-        )
+    if " " in inspection_date:
+        report_date, report_time = inspection_date.split(" ", 1)
 
     result["reportDate"] = report_date
     result["reportTime"] = report_time
