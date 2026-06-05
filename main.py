@@ -197,7 +197,7 @@ def extract_pdf_data(text: str):
 
         
         # hlavný blok
-        "soc": str(int(float(find(r"SOC:(\d+\.\d+)")))),
+        "soc": str(int(float(find(r"SOC:(\d+\.\d+)") or 0))),
         "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
         "odometer": find(r"Odometer.*?(\d+)"),
@@ -442,7 +442,7 @@ async def generate_report_pdf_playwright(
 ):
 
     async with async_playwright() as p:
-
+1
         browser = await p.chromium.launch(
             headless=True,
             executable_path="/usr/bin/chromium",

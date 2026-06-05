@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Ako rozumieť diagnostike trakčnej batérie</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            background-color: #121212;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .page {
+            page-break-after: always;
+            position: relative;
+            min-height: 100%;
+        }
+        /* Hlavička s logom */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #39ff14;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .logo-box img {
+            max-width: 150px;
+            height: auto;
+        }
+        .contact-info {
+            text-align: right;
+            font-size: 14px;
+        }
+        .contact-info strong {
+            color: #39ff14;
+            font-size: 16px;
+        }
+        /* Nadpisy */
+        h1 {
+            color: #39ff14;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+        h2 {
+            color: #39ff14;
+            font-size: 20px;
+            border-left: 4px solid #39ff14;
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            text-align: justify;
+        }
+        .highlight {
+            font-weight: bold;
+        }
+        /* Grafy a obrázky */
+        .center-image {
+            text-align: center;
+            margin: 25px 0;
+        }
+        .center-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        /* Tabuľky */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #333333;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #1a1a1a;
+            color: #39ff14;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #161616;
+        }
+        /* Číslovanie strán */
+        .page-number {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 12px;
+            color: #666666;
+        }
+        /* Zoznamy */
+        ul {
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        /* Spodný banner na poslednej strane */
+        .footer-banner {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .footer-banner img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STRANA 1 -->
+    <div class="page">
+        <div class="header-container">
+            <div class="logo-box">
+                <!-- Tu sa natiahne tvoje logo na prvej strane vľavo hore -->
+                <img src="logo.png" alt="EV Diagnostika Logo">
+            </div>
+            <div class="contact-info">
+                <strong>EV DIAGNOSTIKA</strong><br>
+                +421 903 400 242<br>
+                Diagnostika elektromobilov<br>
+                Trnava a okolie
+            </div>
+        </div>
+
+        <h1>Ako rozumieť diagnostike trakčnej batérie</h1>
+        <p>Tento prehľadný manuál slúži na presnú interpretáciu hodnôt uvedených vo vašom reporte. Dozviete sa v ňom, čo jednotlivé parametre znamenajú a ako odrážajú skutočnú chemickú a mechanickú kondíciu batérie vozidla.</p>
+        
+        <h2>1. SOH (State of Health) - Celkové zdravie batérie</h2>
+        <p>SOH je najdôležitejší ukazovateľ, ktorý vyjadruje aktuálnu využiteľnú kapacitu batérie v porovnaní s momentom, keď bolo vozidlo úplne nové (100 %). Postupný pokles tejto hodnoty (degradácia) je prirodzený chemický proces spôsobený vekom, počtom nabíjacích cyklov a spôsobom používania.</p>
+        
+        <p><span class="highlight">Dôležitý kontext (Kilometre vs. SOH):</span> SOH je potrebné vždy posudzovať s ohľadom na nájazd vozidla. Napríklad hodnota 88 % SOH pri aute, ktoré má najazdených len 30 000 km, je priemerná. Avšak rovnaká hodnota 88 % SOH pri vysokom nájazde (napr. cez 240 000 km) predstavuje vynikajúci výsledok. Svedčí to o skvelej kvalite chemických článkov a šetrnom zaobchádzaní. Pokles kapacity je najrýchlejší v prvých dvoch rokoch prevádzky, následne sa krivka degradácie stabilizuje a sploští.</p>
+        
+        <h3>Typický priebeh degradácie kapacity (SOH) v čase</h3>
+        <div class="center-image">
+            <!-- Graf degradácie vložený na prvej strane -->
+            <img src="image_7d4440.png" alt="Graf degradácie SOH">
+        </div>
+
+        <div class="page-number">Strana 1 z 4</div>
+    </div>
+
+
+    <!-- STRANA 2 (Zlúčená a vyplnená strana) -->
+    <div class="page">
+        <h3>Prehľad hodnotenia SOH</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Hodnota SOH</th>
+                    <th style="width: 25%;">Hodnotenie stavu</th>
+                    <th style="width: 55%;">Čo to znamená v praxi?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">&gt; 95 %</td>
+                    <td>Výborný stav</td>
+                    <td>Batéria je takmer v stave nového kusu, degradácia je minimálna.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">90 - 95 %</td>
+                    <td>Veľmi dobrý stav</td>
+                    <td>Štandardný stav mierne jazdeného vozidla. Bez akéhokoľvek badateľného vplyvu na denný dojazd.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">85 - 90 %</td>
+                    <td>Dobrý stav</td>
+                    <td>Stabilizovaná fáza života batérie. Aj pri vysokom nájazde kilometrov auto spoľahlivo poslúži ešte dlhé roky.</td>
+                </tr>
+                <tr>
+                    <td>80 - 85 %</td>
+                    <td>Zvýšené opotrebenie</td>
+                    <td>Prirodzený stav pri vysokom nájazde alebo staršom ročníku. Maximálny dojazd vozidla môže byť mierne kratší.</td>
+                </tr>
+                <tr>
+                    <td>&lt; 80 %</td>
+                    <td>Odporúčaná kontrola</td>
+                    <td>Batéria vykazuje vyššiu mieru opotrebenia. Výrobcovia pri poklese pod 70 % zväčša riešia záručné reklamácie (ak platí záruka).</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Sekcia 2 presunutá sem, aby dokonale vyplnila prázdne miesto -->
+        <h2>2. Balans článkov (Rozdiel napätia)</h2>
+        <p>Batéria elektromobilu sa skladá zo stoviek samostatných článkov zapojených do väčších modulov. Riadiaci systém auta (BMS - Battery Management System) sa neustále snaží udržiavať medzi všetkými článkami rovnakú úroveň napätia. Rozdiel (udávaný v milivoltoch mV) medzi najviac nabitým (MAX) a najmenej nabitým (MIN) článkom nám hovorí, ako presne dokáže systém batériu vyvažovať.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Rozdiel napätia</th>
+                    <th style="width: 25%;">Hodnotenie balansu</th>
+                    <th style="width: 55%;">Technický význam a odporúčanie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">0 - 10 mV</td>
+                    <td>Výborný balans</td>
+                    <td>Ideálny stav. Najčastejšie ho uvidíte pri novom vozidle alebo po dlhom, plnom nabití na pomalej AC nabíjačke.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">10 - 20 mV</td>
+                    <td>Veľmi dobrý</td>
+                    <td>Úplne štandardný a zdravý stav počas bežnej prevádzky.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">20 - 30 mV</td>
+                    <td>Normálny</td>
+                    <td>Detekované drobné odchýlky sú chemicky prirodzené.</td>
+                </tr>
+                <tr>
+                    <td>30 - 50 mV</td>
+                    <td>Zvýšená odchýlka</td>
+                    <td>Bežný stav pri nízkom stave nabitia (pod 10% SoC) alebo tesne po prudkej akcelerácii či intenzívnej rekuperácii. BMS nestíha články za jazdy dorovnávať. Odporúča sa nechať auto občas stáť na pomalej AC nabíjačke pripojené aj niekoľko hodín po dosiahnutí 100 %, aby mal systém čas na pasívne vybalansovanie.</td>
+                </tr>
+                <tr>
+                    <td>&gt; 50 mV</td>
+                    <td>Odporúčaná kontrola</td>
+                    <td>Výrazný rozdiel, ktorý môže limitovať výkon auta. Najslabší článok dosiahne kritické minimum skôr a BMS obmedzí celé auto, aby ho chránil. Môže indikovať slabnúci článok.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="page-number">Strana 2 z 4</div>
+    </div>
+
+
+    <!-- STRANA 3 -->
+    <div class="page">
+        <h2>3. Teploty článkov a ich rozdiel</h2>
+        <p>Teplota je pre životnosť a bezpečnosť Li-ion batérie kľúčová. Okrem samotnej teploty meria diagnostika aj rozdiel teplôt (Delta T) medzi najteplejším a najchladnejším miestom v batériovom packu. Príliš veľké rozdiely znamenajú, že chladiaci alebo vyhrievací systém nepracuje rovnomerne.</p>
+        
+        <h3>Orientačné hodnotenie rozdielu teplôt (Delta T):</h3>
+        <ul>
+            <li><span class="highlight">&lt; 5 °C (Výborné):</span> Chladiaci/vyhrievací okruh batérie funguje dokonale symetricky. Všetky články majú rovnaké podmienky a starnú synchrónne.</li>
+            <li><span class="highlight">5 - 10 °C (Normálne):</span> Bežný stav pri vysokom zaťažení - napríklad počas intenzívneho DC rýchlonabíjania alebo pri dlhej rýchlej jazde po diaľnici. Články v strede sa prirodzene zohrejú rýchlejšie ako tie na okrajoch.</li>
+            <li><span class="highlight">&gt; 10 °C (Skontrolovať chladenie):</span> Ak tento stav pretrváva aj v kľude, môže to signalizovať zavzdušnený/upchatý chladiaci okruh batérie alebo poruchu ventilov rozvádzajúcich chladivo.</li>
+        </ul>
+
+        <div class="page-number">Strana 3 z 4</div>
+    </div>
+
+
+    <!-- STRANA 4 -->
+    <div class="page">
+        <h3>Vplyv absolútnej teploty na správanie vozidla:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Teplota batérie</th>
+                    <th style="width: 75%;">Vplyv na prevádzku vozidla</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">Menej ako 10 °C</td>
+                    <td>Batéria je chladná. Auto môže dočasne obmedziť silu rekuperácie a na rýchlonabíjačkách nastáva tzv. „coldgating" (pomalé nabíjanie, kým sa batéria sama nezohreje pretekajúcim prúdom).</td>
+                </tr>
+                <tr>
+                    <td class="highlight">15 °C - 35 °C</td>
+                    <td><span class="highlight" style="color: #39ff14;">Ideálne pracovné pásmo (Sweet Spot).</span> Batéria má najnižší vnútorný odpor, poskytuje plný výkon a dokáže sa nabíjať maximálnou podporovanou rýchlosťou.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Nad 45 °C</td>
+                    <td>BMS spúšťa aktívne chladenie na maximum. Ak teplota prekročí cca 55 °C, auto obmedzí výkon aj rýchlosť nabíjania (tzv. "rapidgate"), aby chránilo články pred poškodením a chemickou degradáciou.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 style="margin-top: 40px;">Profesionálna starostlivosť o váš elektromobil</h2>
+        <p>Pravidelná kontrola stavu vysokonapäťovej batérie vám poskytuje nielen istotu na cestách, ale slúži aj ako kľúčový dokument pri prípadnom predaji vozidla. Vďaka presnej diagnostike viete presne predpovedať správanie batérie v zimných aj letných podmienkach.</p>
+
+        <!-- Grafický spodný banner na konci dokumentu -->
+        <div class="footer-banner">
+            <img src="image_7d40fa.png" alt="EV Diagnostika Banner">
+        </div>
+
+        <div class="page-number">Strana 4 z 4</div>
+    </div>
+
+</body>
+</html>
