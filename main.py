@@ -477,6 +477,7 @@ async def generate_report_pdf_playwright(
         SOH: {data['soh']} %
         SOC: {data['soc']} %
         Najazdené km: {data.get('odometer', '')}
+        Miesto: {data['location']}
         Vygenerované: {data['reportDate']}
         """
         
