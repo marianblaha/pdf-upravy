@@ -363,6 +363,7 @@ async def preview():
 
     sample_data = {
         "vin": "TMBJC7NY9PF******",
+        "odometer": "165202",
         "manufacturer": "Skoda",
         "year": "2023",
         "model": "enyaq 80",
@@ -375,6 +376,7 @@ async def preview():
         "maxTemp": "25",
         "minTemp": "24",
         "tempDelta": "1.0",
+        "location": "Trnava",
         "reportDate": "2026-06-01",
         "reportTime": "21:25:47"
     }
@@ -442,7 +444,7 @@ async def generate_report_pdf_playwright(
 ):
 
     async with async_playwright() as p:
-1
+
         browser = await p.chromium.launch(
             headless=True,
             executable_path="/usr/bin/chromium",
