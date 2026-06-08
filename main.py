@@ -533,3 +533,45 @@ async def generate_report_pdf_playwright(
                 "Content-Disposition": f'attachment; filename="{filename}"'
             }
         )
+
+@app.post("/generate-card")
+async def generate_card(data: dict):
+
+    env = Environment(
+        loader=FileSystemLoader("templates")
+    )
+
+    template = env.get_template(
+        "card.html"
+    )
+
+    html = template.render(**data)
+
+    async with async_playwright() as p:
+
+        browser = await p.chromium.launch(
+            headless=True,
+            executable_path="/usr/bin/chromium",
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox"
+            ]
+        )
+
+        page = await browser.new_page(
+            viewport={
+                "width":856,
+                "height":540
+            }
+        )
+
+        await page.set_content(html)
+
+        png = await page.screenshot()
+
+        await browser.close()
+
+    return Response(
+        content=png,
+        media_type="image/png"
+    )
