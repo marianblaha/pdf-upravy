@@ -169,6 +169,8 @@ def extract_html_data(html: str):
     if gps:
         latitude = gps.group(1)
         longitude = gps.group(2)
+        print(latitude)
+        print(longitude)
     else:
         # Trnava centrum
         latitude = "48.3774"
