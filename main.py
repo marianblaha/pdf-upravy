@@ -166,8 +166,13 @@ def extract_html_data(html: str):
         html
     )
 
-    latitude = gps.group(1) if gps else ""
-    longitude = gps.group(2) if gps else ""    
+    if gps:
+        latitude = gps.group(1)
+        longitude = gps.group(2)
+    else:
+        # Trnava centrum
+        latitude = "48.3774"
+        longitude = "17.5872"  
 
     return {
         "vin": vin,
