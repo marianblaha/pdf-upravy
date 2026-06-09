@@ -235,11 +235,11 @@ def extract_pdf_data(text: str):
         ),
 
         "maxTemp": find(
-            r"Temperature℃.*?Max:(\d+)"
+            r"Temperature.*?Max:(\d+(?:\.\d+)?)"
         ),
 
         "minTemp": find(
-            r"Temperature℃.*?Min:(\d+)"
+            r"Temperature.*?Min:(\d+(?:\.\d+)?)"
         ),
 
         "tempDelta": find(
