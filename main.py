@@ -389,7 +389,7 @@ async def preview():
         "packVoltage": "354.1",
         "maxCellVoltage": "3.692",
         "minCellVoltage": "3.685",
-        "cellDelta": "0.007",
+        "cellDelta": "0.027",
         "maxTemp": "25",
         "minTemp": "24",
         "tempDelta": "1.0",
