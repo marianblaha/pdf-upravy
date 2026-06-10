@@ -1245,11 +1245,12 @@ body{
 							v stave odporúčajúcom kontrolu.
 						{% endif %}
 					</li>
-					<li>Namerané SOH: {{ soh }} %.</li>
 					<li>
-						Balans článkov je
-
+						Namerané SOH: {{ soh }} %,
+						
 						{% set delta = (cellDelta|float * 1000) %}
+
+						balans článkov je
 
 						{% if delta <= 10 %}
 							výborný ({{ delta|round|int }} mV).
@@ -1258,11 +1259,20 @@ body{
 						{% elif delta <= 30 %}
 							normálny ({{ delta|round|int }} mV).
 						{% elif delta <= 50 %}
-							odporúčaný na sledovanie ({{ delta|round|int }} mV).
+							mierne zvýšený ({{ delta|round|int }} mV).
 						{% else %}
-							odporúčaný na kontrolu ({{ delta|round|int }} mV).
+							zvýšený ({{ delta|round|int }} mV).
 						{% endif %}
 					</li>
+					{% if delta > 30 and delta <= 50 %}
+					<li>
+						Zistená mierne zvýšená asymetria článkov. Odporúča sa sledovanie pri vyššom zaťažení vozidla.
+					</li>
+					{% elif delta > 50 %}
+					<li>
+						Zistená zvýšená asymetria článkov. Odporúčame odbornú kontrolu trakčnej batérie.
+					</li>
+					{% endif %}					
 					<li>
 						{% if soh|int >= 90 %}
 							Odporúčame pokračovať v bežnom používaní vozidla a pravidelne monitorovať stav trakčnej batérie.
