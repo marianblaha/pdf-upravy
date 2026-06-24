@@ -185,12 +185,7 @@ def extract_html_data(html: str):
         "longitude": longitude        
     }
 
-
 def extract_pdf_data(text: str):
-
-    # print("===- PDF TEXT -===")
-    # print(text)
-    # print("===============")
 
     def find(pattern):
         m = re.search(
@@ -200,20 +195,17 @@ def extract_pdf_data(text: str):
         )
         return m.group(1).strip() if m else ""
 
-    return {
+    data = {
 
-        
         # hlavný blok
-        # "soc": str(int(float(find(r"SOC:(\d+\.\d+)") or 0))), idem to tahat nakoniec z mailu
         "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
         "totalCurrent": find(r"Total current:([-\d\.]+)"),
-        #"odometer": find(r"Odometer.*?(\d+)"), idem to tahat nakoniec z mailu
 
         "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
         "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
 
         "maxVoltageCellNo": find(
-            r"Max-voltage cell No\.:(\d+)"
+            r"Max-voltage cell No\.:(.+?)\n"
         ),
 
         "minVoltageCellNo": find(
@@ -222,7 +214,7 @@ def extract_pdf_data(text: str):
 
         # Voltage sekcia
         "cellCount": find(
-            r"VoltageV \((\d+)\)"
+            r"Voltage\s*V?\s*\((\d+)\)"
         ),
 
         "cellDelta": find(
@@ -231,7 +223,7 @@ def extract_pdf_data(text: str):
 
         # Temperature sekcia
         "tempSensorCount": find(
-            r"Temperature℃ \((\d+)\)"
+            r"Temperature.*?\((\d+)\)"
         ),
 
         "maxTemp": find(
@@ -246,6 +238,81 @@ def extract_pdf_data(text: str):
             r"Temperature difference:(\d+\.\d+)"
         )
     }
+
+    # Ak chýba Min teplota, použije sa Max teplota
+    if not data["minTemp"]:
+        data["minTemp"] = data["maxTemp"]
+
+    # Chýba rozdiel teplôt -> dopočítame
+    if not data["tempDelta"] and data["maxTemp"] and data["minTemp"]:
+        delta = abs(
+            float(data["maxTemp"]) -
+            float(data["minTemp"])
+        )
+        data["tempDelta"] = str(round(delta, 1))
+
+    return data
+
+# def extract_pdf_data(text: str):
+
+    # # print("===- PDF TEXT -===")
+    # # print(text)
+    # # print("===============")
+
+    # def find(pattern):
+        # m = re.search(
+            # pattern,
+            # text,
+            # re.I | re.S
+        # )
+        # return m.group(1).strip() if m else ""
+
+    # return {
+
+        
+        # # hlavný blok
+        # # "soc": str(int(float(find(r"SOC:(\d+\.\d+)") or 0))), idem to tahat nakoniec z mailu
+        # "packVoltage": str(round(float(find(r"Total voltage:(\d+\.\d+)")), 1)),
+        # "totalCurrent": find(r"Total current:([-\d\.]+)"),
+        # #"odometer": find(r"Odometer.*?(\d+)"), idem to tahat nakoniec z mailu
+
+        # "maxCellVoltage": find(r"Max voltage:(\d+\.\d+)"),
+        # "minCellVoltage": find(r"Min voltage:(\d+\.\d+)"),
+
+        # "maxVoltageCellNo": find(
+            # r"Max-voltage cell No\.:(\d+)"
+        # ),
+
+        # "minVoltageCellNo": find(
+            # r"Min-voltage cell No\.:(.+?)\n"
+        # ),
+
+        # # Voltage sekcia
+        # "cellCount": find(
+            # r"VoltageV \((\d+)\)"
+        # ),
+
+        # "cellDelta": find(
+            # r"Voltage difference:(\d+\.\d+)"
+        # ),
+
+        # # Temperature sekcia
+        # "tempSensorCount": find(
+            # r"Temperature℃ \((\d+)\)"
+        # ),
+
+        # "maxTemp": find(
+            # r"Temperature.*?Max:(\d+(?:\.\d+)?)"
+        # ),
+
+        # "minTemp": find(
+            # r"Temperature.*?Min:(\d+(?:\.\d+)?)"
+        # ),
+
+        # "tempDelta": find(
+            # r"Temperature difference:(\d+\.\d+)"
+        # )
+    # }
 
 
 @app.post("/parse-html")
