@@ -239,17 +239,34 @@ def extract_pdf_data(text: str):
         )
     }
 
-    # Ak chýba Min teplota, použije sa Max teplota
-    if not data["minTemp"]:
+    # Min teplota chýba → použijeme Max
+    if not data["minTemp"] and data["maxTemp"]:
         data["minTemp"] = data["maxTemp"]
 
-    # Chýba rozdiel teplôt -> dopočítame
-    if not data["tempDelta"] and data["maxTemp"] and data["minTemp"]:
+    # Chýba rozdiel → dopočítame
+    if (
+        not data["tempDelta"]
+        and data["maxTemp"]
+        and data["minTemp"]
+    ):
         delta = abs(
-            float(data["maxTemp"]) -
-            float(data["minTemp"])
+            float(data["maxTemp"])
+            - float(data["minTemp"])
         )
         data["tempDelta"] = str(round(delta, 1))
+
+    # Ak výrobca teploty neposkytuje
+    if not data["maxTemp"]:
+        data["maxTemp"] = "0"
+
+    if not data["minTemp"]:
+        data["minTemp"] = "0"
+
+    if not data["tempDelta"]:
+        data["tempDelta"] = "0"
+
+    if not data["tempSensorCount"]:
+        data["tempSensorCount"] = "0"
 
     return data
 
