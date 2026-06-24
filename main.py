@@ -243,7 +243,7 @@ def extract_pdf_data(text: str):
     if not data["minTemp"] and data["maxTemp"]:
         data["minTemp"] = data["maxTemp"]
 
-    # Chýba rozdiel → dopočítame
+    # Chýba rozdiel teplôt → dopočítame
     if (
         not data["tempDelta"]
         and data["maxTemp"]
@@ -254,6 +254,24 @@ def extract_pdf_data(text: str):
             - float(data["minTemp"])
         )
         data["tempDelta"] = str(round(delta, 1))
+
+
+    # Min napätie chýba → použijeme Max
+    if not data["minCellVoltage"] and data["maxCellVoltage"]:
+        data["minCellVoltage"] = data["maxCellVoltage"]
+
+    # Chýba rozdiel napätí → dopočítame
+    if (
+        not data["cellDelta"]
+        and data["maxCellVoltage"]
+        and data["minCellVoltage"]
+    ):
+        delta = abs(
+            float(data["maxCellVoltage"])
+            - float(data["minCellVoltage"])
+        )
+        data["cellDelta"] = str(round(delta, 3))
+
 
     # Ak výrobca teploty neposkytuje
     if not data["maxTemp"]:
@@ -267,6 +285,22 @@ def extract_pdf_data(text: str):
 
     if not data["tempSensorCount"]:
         data["tempSensorCount"] = "0"
+
+
+    # Ak výrobca neposkytuje napätia
+    if not data["maxCellVoltage"]:
+        data["maxCellVoltage"] = "0"
+
+    if not data["minCellVoltage"]:
+        data["minCellVoltage"] = "0"
+
+    if not data["cellDelta"]:
+        data["cellDelta"] = "0"
+
+
+    # Ak výrobca neposkytuje počet článkov
+    if not data["cellCount"]:
+        data["cellCount"] = "0"
 
     return data
 
